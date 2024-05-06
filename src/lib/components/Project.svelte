@@ -1,9 +1,10 @@
 <script lang="ts">
-	import type { ProjectT, DataT } from '../types';
+	import type { ProjectT } from '../types';
 	import { supabase } from '../supabase';
-	export let project: ProjectT;
 	import Register from '$lib/components/Register.svelte';
 	import Values from '$lib/components/Values.svelte';
+
+	export let project: ProjectT;
 
 	async function createDescriptor(e: Event) {
 		const target = e.target as HTMLFormElement;
@@ -12,12 +13,27 @@
 		const description = target.description.value;
 		const type = target.type.value;
 
-		const { data, error } = await supabase
-			.from('descriptors')
-			.insert({ name, description, type, project_id: project.id });
-		if (error) {
-			console.log(error);
+		const res = await fetch('/api/descriptors', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				project_id: project.id,
+				name,
+				description,
+				type
+			})
+		});
+
+		if (!res.ok) {
+			// TODO: handle error
+			console.error('Failed to create descriptor');
+			return;
 		}
+
+		const json = await res.json();
+		project.descriptors.push(json);
 	}
 </script>
 
@@ -28,6 +44,7 @@
 	{/if}
 
 	<form class="add-descriptor" on:submit|preventDefault={createDescriptor}>
+		<input type="hidden" value={project.id} name="project_id" />
 		<input type="text" placeholder="Name" name="descriptor_name" required />
 		<input type="description" placeholder="Description" name="description" />
 		<select name="type" required>

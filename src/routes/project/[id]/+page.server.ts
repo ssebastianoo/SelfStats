@@ -1,22 +1,16 @@
 import type { PageServerLoad } from './$types';
-import { error } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 import { supabase } from '$lib/server/supabase';
 import type { ProjectT } from '$lib/types';
-import jwt from 'jsonwebtoken';
+import { getUser } from '$lib/server/utils';
 
 export const load = (async ({ params, cookies }) => {
-	const token = cookies.get('token');
-
-	if (!token) {
-		throw error(401, 'Unauthorized');
+	const { user, error: userError } = getUser(cookies);
+	if (userError || !user) {
+		throw error(401, userError);
 	}
 
-	const userData = jwt.decode(token) as { sub: string } | null;
-	if (!userData) {
-		throw error(401, 'Unauthorized');
-	}
-
-	const userId = userData.sub;
+	const userId = user.sub;
 
 	let project: ProjectT;
 
@@ -61,3 +55,37 @@ export const load = (async ({ params, cookies }) => {
 		project
 	};
 }) satisfies PageServerLoad;
+
+export const actions = {
+	addDescriptor: async ({ cookies, request }) => {
+		const { user } = getUser(cookies);
+		if (!user) {
+			return error(401, 'Unauthorized');
+		}
+
+		const data = await request.formData();
+		const name = data.get('descriptor_name');
+		const description = data.get('description');
+		const type = data.get('type');
+		const project_id = data.get('project_id');
+
+		if (!name || !type || !project_id) {
+			return fail(400, {
+				message: 'Missing required fields'
+			});
+		}
+
+		const { data: result } = await supabase
+			.from('descriptors')
+			.insert([{ name, description, type, project_id }])
+			.select();
+
+		if (result) {
+			return { success: true, descriptor: result[0] };
+		} else {
+			return fail(500, {
+				message: 'Missing required fields'
+			});
+		}
+	}
+};

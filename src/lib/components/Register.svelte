@@ -89,8 +89,8 @@
 						placeholder="value"
 						class="w-20 border-black border-2"
 					/>
-					<Button variant="outline" size="sm" type="submit">Add value</Button>
 				{/each}
+				<Button variant="outline" size="sm" type="submit">Add value</Button>
 			</form>
 		</Dialog.Content>
 	</Dialog.Root>
