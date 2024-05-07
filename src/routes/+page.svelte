@@ -8,6 +8,7 @@
 	import * as Card from '$lib/components/ui/card';
 
 	export let data;
+	let dialogOpen = false;
 
 	async function createProject(e: Event) {
 		const target = e.target as HTMLFormElement;
@@ -33,13 +34,17 @@
 
 		const json = await res.json();
 		data.projects = [...data.projects, json];
+		dialogOpen = false;
 	}
 </script>
 
 <div class="text-right">
-	<Dialog.Root>
-		<Dialog.Trigger class={buttonVariants({ variant: 'outline', size: 'sm' })}
-			><Plus /></Dialog.Trigger
+	<Dialog.Root open={dialogOpen}>
+		<Dialog.Trigger
+			on:click={() => {
+				dialogOpen = true;
+			}}
+			class={buttonVariants({ variant: 'outline', size: 'sm' })}><Plus /></Dialog.Trigger
 		>
 		<Dialog.Content>
 			<Dialog.Header>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { ProjectT } from '$lib/types';
 	import * as Dialog from '$lib/components/ui/dialog';
+	import { Dialog as DialogPrimitive } from 'bits-ui';
 	import { buttonVariants, Button } from '$lib/components/ui/button';
 	import { Plus } from 'lucide-svelte';
 	import Input from './ui/input/input.svelte';
@@ -98,14 +99,11 @@
 					{#if descriptor.description}
 						<p>{descriptor.description}</p>
 					{/if}
-					<Input
-						name={'descriptor_' + descriptor.id}
-						type="text"
-						placeholder="value"
-						class="w-20 border-black border-2"
-					/>
+					<Input name={'descriptor_' + descriptor.id} type="text" placeholder="value" required />
 				{/each}
-				<Button variant="outline" size="sm" type="submit">Add value</Button>
+				<DialogPrimitive.Close>
+					<Button variant="outline" size="sm" type="submit">Add value</Button>
+				</DialogPrimitive.Close>
 			</form>
 		</Dialog.Content>
 	</Dialog.Root>
