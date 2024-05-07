@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { ProjectT } from '../types';
-	import { supabase } from '../supabase';
 	import Register from '$lib/components/Register.svelte';
 	import Values from '$lib/components/Values.svelte';
 
@@ -58,7 +57,12 @@
 		/>
 	</form>
 	<Values {project} />
-	<Register {project} />
+	<Register
+		{project}
+		on:newValue={(e) => {
+			project.data = [...project.data, e.detail.data];
+		}}
+	/>
 </div>
 
 <style>

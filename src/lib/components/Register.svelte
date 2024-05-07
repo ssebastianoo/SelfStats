@@ -1,41 +1,38 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabase';
 	import type { ProjectT } from '$lib/types';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import * as Card from '$lib/components/ui/card';
 	import { buttonVariants, Button } from '$lib/components/ui/button';
 	import { Plus } from 'lucide-svelte';
+	import Input from './ui/input/input.svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	export let project: ProjectT;
 
+	const dispatch = createEventDispatcher();
+
 	async function addSimpleValue(e: Event) {
-		const { error } = await supabase
-			.from('data')
-			.insert({
+		const res = await fetch('/api/values', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
 				project_id: project.id
 			})
-			.select('id');
-
-		if (error) {
-			throw new Error(error.message);
+		});
+		if (!res.ok) {
+			// TODO: add error handling
+			return console.error('Error adding value');
 		}
+
+		const json = await res.json();
+		dispatch('newValue', {
+			data: json.data
+		});
 	}
 
 	async function addValue(e: Event) {
 		const target = e.target as HTMLFormElement;
-
-		const { data, error } = await supabase
-			.from('data')
-			.insert({
-				project_id: project.id
-			})
-			.select('id');
-
-		if (error) {
-			throw new Error(error.message);
-		}
-
-		const data_id = data[0].id;
 
 		let values: {
 			descriptor_id: number;
@@ -57,14 +54,32 @@
 				type: descriptor.type,
 				project_id: project.id,
 				value,
-				data_id
+				data_id: 0
 			});
 		}
-		console.log(values);
-		const { error: valuesError } = await supabase.from('values').insert(values);
-		if (valuesError) {
-			console.log(valuesError);
+
+		const res = await fetch('/api/values', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				project_id: project.id,
+				values
+			})
+		});
+
+		if (!res.ok) {
+			// TODO: handle error
+			console.log(res);
+			return console.error('Error adding values');
 		}
+
+		const json = await res.json();
+
+		dispatch('newValue', {
+			data: json.data
+		});
 	}
 </script>
 
@@ -83,7 +98,7 @@
 					{#if descriptor.description}
 						<p>{descriptor.description}</p>
 					{/if}
-					<input
+					<Input
 						name={'descriptor_' + descriptor.id}
 						type="text"
 						placeholder="value"

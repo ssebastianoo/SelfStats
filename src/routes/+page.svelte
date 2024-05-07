@@ -6,7 +6,6 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import * as Card from '$lib/components/ui/card';
-	import { user } from '$lib/store';
 
 	export let data;
 
@@ -16,7 +15,24 @@
 		const name = target.project_name.value;
 		const description = target.description.value;
 
-		await supabase.from('projects').insert({ name, description, user_id: $user!.id });
+		const res = await fetch('/api/projects', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				name,
+				description
+			})
+		});
+
+		if (!res.ok) {
+			// TODO: handle error
+			return console.error('Failed to create project');
+		}
+
+		const json = await res.json();
+		data.projects = [...data.projects, json];
 	}
 </script>
 
