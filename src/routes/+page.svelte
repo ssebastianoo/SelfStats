@@ -1,14 +1,17 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabase';
 	import { Plus } from 'lucide-svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { buttonVariants, Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Textarea } from '$lib/components/ui/textarea';
-	import * as Card from '$lib/components/ui/card';
+	import { Pencil } from 'lucide-svelte';
+	import type { ProjectT } from '$lib/types';
+	import * as Select from '$lib/components/ui/select';
 
 	export let data;
 	let dialogOpen = false;
+
+	let editingProject: ProjectT | null = null;
 
 	async function createProject(e: Event) {
 		const target = e.target as HTMLFormElement;
@@ -36,9 +39,50 @@
 		data.projects = [...data.projects, json];
 		dialogOpen = false;
 	}
+
+	async function editProject(e: Event) {
+		if (!editingProject) {
+			return;
+		}
+
+		const target = e.target as HTMLFormElement;
+
+		const name = target.project_name.value;
+		let description = target.description.value;
+
+		if (description === '') {
+			description = null;
+		}
+
+		const res = await fetch(`/api/projects`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				name,
+				description,
+				project_id: editingProject.id
+			})
+		});
+
+		if (!res.ok) {
+			return console.error('Failed to edit project');
+		}
+
+		const json = await res.json();
+		data.projects = data.projects.map((project) => {
+			if (project.id === json.id) {
+				return json;
+			}
+			return project;
+		});
+
+		editingProject = null;
+	}
 </script>
 
-<div class="text-right">
+<div class="text-right mb-4">
 	<Dialog.Root open={dialogOpen}>
 		<Dialog.Trigger
 			on:click={() => {
@@ -57,26 +101,51 @@
 			</form>
 		</Dialog.Content>
 	</Dialog.Root>
-
-	<Button
-		on:click={() => {
-			supabase.auth.signOut();
-			location.reload();
-		}}>Logout</Button
-	>
 </div>
 
-<div class="flex">
+<Dialog.Root open={editingProject ? true : false}>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>Edit project</Dialog.Title>
+		</Dialog.Header>
+		{#if editingProject}
+			<form on:submit={editProject} class="flex flex-col gap-2">
+				<Input
+					type="text"
+					name="project_name"
+					placeholder="Name"
+					value={editingProject.name}
+					required
+				/>
+				<Textarea name="description" placeholder="Description" value={editingProject.description} />
+				<Button type="submit" size="sm">Edit Project</Button>
+			</form>
+		{/if}
+	</Dialog.Content>
+</Dialog.Root>
+
+<div class="flex flex-col gap-2">
 	{#each data.projects as project}
-		<a href={'/project/' + project.id}>
-			<Card.Root class="hover:border-white">
-				<Card.Header>
-					<Card.Title>{project.name}</Card.Title>
-					{#if project.description}
-						<Card.Description>{project.description}</Card.Description>
-					{/if}
-				</Card.Header>
-			</Card.Root>
+		<a
+			href={'/project/' + project.id}
+			class="border rounded-md p-2 hover:border-white flex justify-between items-center"
+		>
+			<div>
+				<h2 class="text-lg">{project.name}</h2>
+				{#if project.description}
+					<p class="text-muted-foreground">{project.description}</p>
+				{/if}
+			</div>
+			<div>
+				<Button
+					size="sm"
+					variant="outline"
+					on:click={(e) => {
+						e.preventDefault();
+						editingProject = project;
+					}}><Pencil size="20" /></Button
+				>
+			</div>
 		</a>
 	{/each}
 </div>

@@ -49,7 +49,19 @@
 <Toaster />
 
 {#if logged}
-	<slot />
+	<main class="p-7">
+		<header class="text-right mb-4">
+			<Button
+				on:click={() => {
+					supabase.auth.signOut();
+					location.reload();
+				}}>Logout</Button
+			>
+		</header>
+		<div>
+			<slot />
+		</div>
+	</main>
 {:else}
 	<div class="flex justify-center items-center h-[var(--fh)]">
 		<Button on:click={login}>Login</Button>

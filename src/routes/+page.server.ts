@@ -12,18 +12,28 @@ export const load = (async ({ cookies }) => {
 
 	const userId = user.sub;
 
-	let projects: ProjectT[] = [];
+	const projects: ProjectT[] = [];
 
-	const { data } = await supabase.from('projects').select('*').eq('user_id', userId);
+	const { data } = await supabase
+		.from('projects')
+		.select('*')
+		.eq('user_id', userId)
+		.order('created_at');
 	if (data) {
-		projects = data.map((project) => {
-			return {
-				...project,
-				descriptors: [],
-				data: [],
-				values: []
-			};
-		});
+		for (const project of data) {
+			const _project = { ...project, descriptors: [], data: [], values: [] };
+
+			// const { data: descriptors } = await supabase
+			// 	.from('descriptors')
+			// 	.select('*')
+			// 	.eq('project_id', project.id)
+			// 	.order('created_at', { ascending: false });
+
+			// if (descriptors) {
+			// 	_project.descriptors = descriptors;
+			// }
+			projects.push(_project);
+		}
 	}
 
 	return {
