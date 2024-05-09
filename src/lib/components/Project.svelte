@@ -2,8 +2,13 @@
 	import type { ProjectT } from '../types';
 	import Register from '$lib/components/Register.svelte';
 	import Values from '$lib/components/Values.svelte';
+	import { Button } from './ui/button';
+	import { Pencil } from 'lucide-svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	export let project: ProjectT;
+
+	const dispatch = createEventDispatcher();
 
 	async function createDescriptor(e: Event) {
 		const target = e.target as HTMLFormElement;
@@ -36,26 +41,21 @@
 	}
 </script>
 
-<div class="project">
-	<h2 class="text-3xl">{project.name}</h2>
+<div>
+	<div class="flex gap-3 items-center">
+		<h2 class="text-3xl">{project.name}</h2>
+
+		<Button
+			size="sm"
+			variant="outline"
+			on:click={() => {
+				dispatch('edit');
+			}}><Pencil size="20" /></Button
+		>
+	</div>
 	{#if project.description}
 		<p>{project.description}</p>
 	{/if}
-
-	<form class="add-descriptor" on:submit|preventDefault={createDescriptor}>
-		<input type="hidden" value={project.id} name="project_id" />
-		<input type="text" placeholder="Name" name="descriptor_name" required />
-		<input type="description" placeholder="Description" name="description" />
-		<select name="type" required>
-			<option value="text">Text</option>
-			<option value="number">Number</option>
-		</select>
-		<input
-			class="border-2 border-black w-32 hover:cursor-pointer"
-			type="submit"
-			value="Add descriptor"
-		/>
-	</form>
 	<Values {project} />
 	<Register
 		{project}
@@ -64,15 +64,3 @@
 		}}
 	/>
 </div>
-
-<style>
-	.project {
-		border: 1px solid black;
-	}
-
-	.add-descriptor {
-		border: 1px solid black;
-		display: flex;
-		flex-direction: column;
-	}
-</style>

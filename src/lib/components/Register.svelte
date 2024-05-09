@@ -99,7 +99,12 @@
 					{#if descriptor.description}
 						<p>{descriptor.description}</p>
 					{/if}
-					<Input name={'descriptor_' + descriptor.id} type="text" placeholder="value" required />
+					<Input
+						name={'descriptor_' + descriptor.id}
+						type={descriptor.type}
+						placeholder={descriptor.type === 'text' ? 'Enter text' : 'Enter number'}
+						required
+					/>
 				{/each}
 				<DialogPrimitive.Close>
 					<Button variant="outline" size="sm" type="submit">Add value</Button>

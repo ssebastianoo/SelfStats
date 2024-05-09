@@ -1,16 +1,255 @@
 <script lang="ts">
 	import Project from '$lib/components/Project.svelte';
+	import { Input } from '$lib/components/ui/input';
+	import { Textarea } from '$lib/components/ui/textarea';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { Label } from '$lib/components/ui/label';
+	import type { DescriptorT } from '$lib/types';
 
 	export let data;
-	export let form;
 
-	if (form?.success) {
-		console.log(form.descriptor);
+	let editing = false;
+	let openSection: 'edit' | 'create' | null = null;
 
-		data.project.descriptors.push(form.descriptor);
+	async function editProject(e: Event) {
+		const target = e.target as HTMLFormElement;
+
+		const name = target.project_name.value;
+		let description = target.description.value;
+
+		if (description === '') {
+			description = null;
+		}
+
+		const res = await fetch(`/api/projects`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				name,
+				description,
+				project_id: data.project.id
+			})
+		});
+
+		if (!res.ok) {
+			return console.error('Failed to edit project');
+		}
+
+		const json = await res.json();
+		data.project = json;
+	}
+
+	async function editDescriptors(e: Event) {
+		const target = e.target as HTMLFormElement;
+		let descriptors: DescriptorT[] = [];
+
+		for (const descriptor of data.project.descriptors) {
+			const newDescriptor = { ...descriptor };
+			newDescriptor.name = target['descriptor_name_' + descriptor.id].value;
+			newDescriptor.description = target['descriptor_description_' + descriptor.id].value;
+			newDescriptor.type = target['descriptor_type_' + descriptor.id].value;
+
+			descriptors.push(newDescriptor);
+		}
+
+		const res = await fetch(`/api/descriptors`, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				descriptors
+			})
+		});
+
+		if (!res.ok) {
+			// TODO: handle error
+			return console.error(res);
+		}
+
+		const json = await res.json();
+		data.project.descriptors = json;
+	}
+
+	async function createDescriptor(e: Event) {
+		const target = e.target as HTMLFormElement;
+
+		const name = target.descriptor_name.value;
+		const description = target.description.value;
+		const type = target.type.value;
+
+		const res = await fetch('/api/descriptors', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				project_id: data.project.id,
+				name,
+				description,
+				type
+			})
+		});
+
+		if (!res.ok) {
+			// TODO: handle error
+			console.error('Failed to create descriptor');
+			return;
+		}
+
+		const json = await res.json();
+		data.project.descriptors = [...data.project.descriptors, json];
 	}
 </script>
 
-<div class="flex flex-col justify-center items-center h-[var(--fh)]">
-	<Project project={data.project} />
-</div>
+{#if !editing}
+	<Project
+		project={data.project}
+		on:edit={() => {
+			editing = true;
+		}}
+	/>
+{:else}
+	<div class="flex gap-3 items-center">
+		<h2 class="text-xl">Editing project</h2>
+		<Button
+			variant="outline"
+			size="sm"
+			on:click={() => {
+				editing = false;
+			}}
+		>
+			Close
+		</Button>
+	</div>
+	<hr class="my-4" />
+	<form on:submit|preventDefault={editProject} class="flex flex-col gap-2">
+		<div class="flex gap-2">
+			<Label for="name" class="w-28">Name</Label>
+			<Input
+				id="name"
+				type="text"
+				name="project_name"
+				placeholder="Statistics Project"
+				value={data.project.name}
+				required
+			/>
+		</div>
+		<div class="flex gap-2">
+			<Label for="description" class="w-28">Description</Label>
+			<Textarea
+				id="description"
+				name="description"
+				placeholder="My really cool statistics project."
+				value={data.project.description}
+			/>
+		</div>
+		<div class="flex justify-end">
+			<Button type="submit" size="sm" variant="default" class="w-20">Save</Button>
+		</div>
+	</form>
+	<hr class="my-4" />
+	<h2 class="text-lg">Descriptors</h2>
+
+	<div class="my-4">
+		<Button
+			on:click={() => {
+				openSection = 'create';
+			}}
+			size="sm"
+			variant={openSection === 'create' ? 'default' : 'outline'}>Create descriptor</Button
+		>
+		<Button
+			on:click={() => {
+				openSection = 'edit';
+			}}
+			size="sm"
+			variant={openSection === 'edit' ? 'default' : 'outline'}>Edit descriptors</Button
+		>
+	</div>
+
+	{#if openSection === 'edit'}
+		<form on:submit|preventDefault={editDescriptors} class="flex flex-col gap-2">
+			{#each data.project.descriptors as descriptor}
+				<div class="flex gap-2">
+					<Label for={'descriptor_name_' + descriptor.id} class="w-28">Name</Label>
+					<Input
+						id={'descriptor_name_' + descriptor.id}
+						name={'descriptor_name_' + descriptor.id}
+						placeholder="My really cool descriptor"
+						value={descriptor.name}
+					/>
+				</div>
+				<div class="flex gap-2">
+					<Label for={'descriptor_description_' + descriptor.id} class="w-28">Description</Label>
+					<Input
+						id={'descriptor_description_' + descriptor.id}
+						name={'descriptor_description_' + descriptor.id}
+						placeholder="My really cool descriptor"
+						value={descriptor.description}
+					/>
+				</div>
+
+				<div class="flex gap-2">
+					<Label for={'descriptor_type_' + descriptor.id} class="w-28">Type</Label>
+
+					<select
+						name={'descriptor_type_' + descriptor.id}
+						id={'descriptor_type_' + descriptor.id}
+						class="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
+			ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium
+			placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2
+			focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+						required
+					>
+						<option value="text" selected={descriptor.type === 'text'}>Text</option>
+						<option value="number" selected={descriptor.type === 'number'}>Number</option>
+					</select>
+				</div>
+				<hr class="my-4" />
+			{/each}
+			<div class="flex justify-end">
+				<Button type="submit" size="sm" variant="default" class="w-20">Save</Button>
+			</div>
+		</form>
+	{/if}
+	{#if openSection === 'create'}
+		<form on:submit|preventDefault={createDescriptor} class="flex flex-col gap-2">
+			<div class="flex gap-2">
+				<Label for="name" class="w-28">Name</Label>
+				<Input
+					id="name"
+					type="text"
+					name="descriptor_name"
+					placeholder="Descriptor name"
+					required
+				/>
+			</div>
+			<div class="flex gap-2">
+				<Label for="description" class="w-28">Description</Label>
+				<Textarea id="description" name="description" placeholder="Descriptor description" />
+			</div>
+
+			<div class="flex gap-2">
+				<Label for="type" class="w-28">Type</Label>
+				<select
+					name="type"
+					id="type"
+					class="h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
+			ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium
+			placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2
+			focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+					required
+				>
+					<option value="text">Text</option>
+					<option value="number">Number</option>
+				</select>
+			</div>
+			<div class="flex justify-end">
+				<Button type="submit" size="sm" variant="default" class="w-20">Save</Button>
+			</div>
+		</form>
+	{/if}
+{/if}

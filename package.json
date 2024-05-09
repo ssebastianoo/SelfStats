@@ -35,6 +35,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@fontsource-variable/inter": "^5.0.18",
     "@supabase/supabase-js": "^2.42.5",
     "@types/jsonwebtoken": "^9.0.6",
     "bits-ui": "^0.21.7",

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '@fontsource-variable/inter';
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabase';
 	import { Toaster } from '$lib/components/ui/sonner';

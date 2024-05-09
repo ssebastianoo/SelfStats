@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { error, fail } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import { supabase } from '$lib/server/supabase';
 import type { ProjectT } from '$lib/types';
 import { getUser } from '$lib/server/utils';
@@ -55,37 +55,3 @@ export const load = (async ({ params, cookies }) => {
 		project
 	};
 }) satisfies PageServerLoad;
-
-export const actions = {
-	addDescriptor: async ({ cookies, request }) => {
-		const { user } = getUser(cookies);
-		if (!user) {
-			return error(401, 'Unauthorized');
-		}
-
-		const data = await request.formData();
-		const name = data.get('descriptor_name');
-		const description = data.get('description');
-		const type = data.get('type');
-		const project_id = data.get('project_id');
-
-		if (!name || !type || !project_id) {
-			return fail(400, {
-				message: 'Missing required fields'
-			});
-		}
-
-		const { data: result } = await supabase
-			.from('descriptors')
-			.insert([{ name, description, type, project_id }])
-			.select();
-
-		if (result) {
-			return { success: true, descriptor: result[0] };
-		} else {
-			return fail(500, {
-				message: 'Missing required fields'
-			});
-		}
-	}
-};

@@ -6,7 +6,6 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Pencil } from 'lucide-svelte';
 	import type { ProjectT } from '$lib/types';
-	import * as Select from '$lib/components/ui/select';
 
 	export let data;
 	let dialogOpen = false;
@@ -149,10 +148,3 @@
 		</a>
 	{/each}
 </div>
-
-<!-- 
-<div class="projects">
-	{#each projects as project}
-		<Project {project} />
-	{/each}
-</div> -->
