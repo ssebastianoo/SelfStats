@@ -4,7 +4,6 @@
 	import { buttonVariants, Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Textarea } from '$lib/components/ui/textarea';
-	import { Pencil } from 'lucide-svelte';
 	import type { ProjectT } from '$lib/types';
 
 	export let data;
@@ -125,26 +124,11 @@
 
 <div class="flex flex-col gap-2">
 	{#each data.projects as project}
-		<a
-			href={'/project/' + project.id}
-			class="border rounded-md p-2 hover:border-white flex justify-between items-center"
-		>
-			<div>
-				<h2 class="text-lg">{project.name}</h2>
-				{#if project.description}
-					<p class="text-muted-foreground">{project.description}</p>
-				{/if}
-			</div>
-			<div>
-				<Button
-					size="sm"
-					variant="outline"
-					on:click={(e) => {
-						e.preventDefault();
-						editingProject = project;
-					}}><Pencil size="20" /></Button
-				>
-			</div>
+		<a href={'/project/' + project.id} class="border rounded-md p-2 hover:border-white">
+			<h2 class="text-lg">{project.name}</h2>
+			{#if project.description}
+				<p class="text-muted-foreground">{project.description}</p>
+			{/if}
 		</a>
 	{/each}
 </div>

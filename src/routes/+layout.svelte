@@ -6,6 +6,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { user } from '$lib/store';
 	import { getCookie, setCookie } from '$lib/utils';
+	import { Home } from 'lucide-svelte';
 	import './app.css';
 
 	let logged = false;
@@ -51,8 +52,11 @@
 
 {#if logged}
 	<main class="p-7">
-		<header class="text-right mb-4">
+		<header class="flex justify-between mb-4 items-center">
+			<a href="/"><Home size="30" /></a>
 			<Button
+				variant="outline"
+				size="sm"
 				on:click={() => {
 					supabase.auth.signOut();
 					location.reload();

@@ -2,19 +2,33 @@
 	import type { ProjectT } from '$lib/types';
 
 	export let project: ProjectT;
+
+	import * as Table from '$lib/components/ui/table';
 </script>
 
-<p>{project.data.length}</p>
+<Table.Root>
+	<Table.Caption>Registered values</Table.Caption>
+	<Table.Header>
+		<Table.Row>
+			<Table.Head>Date</Table.Head>
+			{#each project.descriptors as descriptor}
+				<Table.Head>{descriptor.name}</Table.Head>
+			{/each}
+		</Table.Row>
+	</Table.Header>
+	<Table.Body>
+		{#each project.data as data}
+			<Table.Row>
+				<Table.Cell>{new Date(data.created_at).toDateString()}</Table.Cell>
 
-<div class="flex flex-wrap gap-2">
-	{#each project.data as data}
-		<div class="border p-2 rounded-md">
-			<p>{new Date(data.created_at).toDateString()}</p>
-			{#if data.values}
-				{#each data.values as value}
-					<p>{value.name}: {value.value}</p>
-				{/each}
-			{/if}
-		</div>
-	{/each}
-</div>
+				{#if data.values}
+					{#each project.descriptors as descriptor}
+						<Table.Cell>
+							{data.values.find((value) => value.descriptor_id === descriptor.id)?.value || ''}
+						</Table.Cell>
+					{/each}
+				{/if}
+			</Table.Row>
+		{/each}
+	</Table.Body>
+</Table.Root>

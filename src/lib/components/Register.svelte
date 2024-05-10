@@ -72,7 +72,6 @@
 
 		if (!res.ok) {
 			// TODO: handle error
-			console.log(res);
 			return console.error('Error adding values');
 		}
 

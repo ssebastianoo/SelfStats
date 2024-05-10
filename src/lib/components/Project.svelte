@@ -5,6 +5,7 @@
 	import { Button } from './ui/button';
 	import { Pencil } from 'lucide-svelte';
 	import { createEventDispatcher } from 'svelte';
+	import Charts from './Charts.svelte';
 
 	export let project: ProjectT;
 
@@ -50,17 +51,23 @@
 			variant="outline"
 			on:click={() => {
 				dispatch('edit');
-			}}><Pencil size="20" /></Button
+			}}><Pencil size="18" /></Button
 		>
 	</div>
 	{#if project.description}
-		<p>{project.description}</p>
+		<p class="mt-2">{project.description}</p>
 	{/if}
+	<hr class="my-4" />
+
+	<div class="flex justify-center gap-4 items-center">
+		<h1 class="text-6xl">{project.data.length}</h1>
+		<Register
+			{project}
+			on:newValue={(e) => {
+				project.data = [e.detail.data, ...project.data];
+			}}
+		/>
+	</div>
+	<!-- <Charts {project} /> -->
 	<Values {project} />
-	<Register
-		{project}
-		on:newValue={(e) => {
-			project.data = [...project.data, e.detail.data];
-		}}
-	/>
 </div>

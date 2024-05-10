@@ -12,8 +12,6 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 
 	const json = await request.json();
 
-	console.log(json);
-
 	if (!json.project_id) {
 		return new Response('Missing fields', { status: 400 });
 	}
