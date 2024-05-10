@@ -7,6 +7,7 @@
 	import { user } from '$lib/store';
 	import { getCookie, setCookie } from '$lib/utils';
 	import { Home } from 'lucide-svelte';
+	import { inject } from '@vercel/analytics';
 	import './app.css';
 
 	let logged = false;
