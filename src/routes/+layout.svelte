@@ -13,6 +13,8 @@
 	let logged = false;
 
 	onMount(async () => {
+		inject();
+
 		if (!$user) {
 			const { data } = await supabase.auth.getUser();
 
