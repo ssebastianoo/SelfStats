@@ -6,6 +6,7 @@ import { getUser } from '$lib/server/utils';
 
 export const load = (async ({ cookies }) => {
 	const { user, error: userError } = getUser(cookies);
+
 	if (userError || !user) {
 		throw error(401, userError);
 	}
@@ -22,16 +23,6 @@ export const load = (async ({ cookies }) => {
 	if (data) {
 		for (const project of data) {
 			const _project = { ...project, descriptors: [], data: [], values: [] };
-
-			// const { data: descriptors } = await supabase
-			// 	.from('descriptors')
-			// 	.select('*')
-			// 	.eq('project_id', project.id)
-			// 	.order('created_at', { ascending: false });
-
-			// if (descriptors) {
-			// 	_project.descriptors = descriptors;
-			// }
 			projects.push(_project);
 		}
 	}

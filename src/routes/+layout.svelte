@@ -42,7 +42,8 @@
 					access_type: 'offline',
 					prompt: 'consent'
 				},
-				redirectTo: process.env.NODE_ENV === 'development' ? 'http://localhost:5173' : undefined
+				redirectTo:
+					process.env.NODE_ENV === 'development' ? 'http://localhost:5173/callback' : undefined
 			}
 		});
 	}
