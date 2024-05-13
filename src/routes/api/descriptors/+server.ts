@@ -54,3 +54,26 @@ export const PATCH: RequestHandler = async ({ cookies, request }) => {
 		return new Response('There was an error creating the descriptor', { status: 500 });
 	}
 };
+
+export const DELETE: RequestHandler = async ({ cookies, request }) => {
+	const { user } = getUser(cookies);
+	if (!user) {
+		return new Response('Unauthorized', { status: 401 });
+	}
+
+	const data = await request.json();
+
+	if (!data.id) {
+		return new Response('Missing fields', { status: 400 });
+	}
+
+	const { data: descriptor } = await supabase.from('descriptors').select().eq('id', data.id);
+	if (!descriptor) {
+		return new Response('Descriptor not found', { status: 404 });
+	}
+
+	await supabase.from('values').delete().eq('descriptor_id', data.id);
+	await supabase.from('descriptors').delete().eq('id', data.id);
+
+	return new Response('Descriptor deleted', { status: 200 });
+};

@@ -102,6 +102,27 @@
 		const json = await res.json();
 		data.project.descriptors = [...data.project.descriptors, json];
 	}
+
+	async function deleteDescriptor(descriptor: DescriptorT) {
+		const res = await fetch(`/api/descriptors`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				id: descriptor.id
+			})
+		});
+
+		if (!res.ok) {
+			return console.error('Failed to delete descriptor');
+		}
+
+		data.project.descriptors = data.project.descriptors.filter((d) => d.id !== descriptor.id);
+		for (const _data of data.project.data) {
+			_data.values = _data.values.filter((v) => v.descriptor_id !== descriptor.id);
+		}
+	}
 </script>
 
 {#if !editing}
@@ -208,6 +229,16 @@
 						<option value="number" selected={descriptor.type === 'number'}>Number</option>
 					</select>
 				</div>
+				<div class="flex justify-end">
+					<Button
+						variant="destructive"
+						size="sm"
+						on:click={async () => {
+							await deleteDescriptor(descriptor);
+						}}>Delete</Button
+					>
+				</div>
+
 				<hr class="my-4" />
 			{/each}
 			<div class="flex justify-end">
