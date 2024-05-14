@@ -5,41 +5,10 @@
 	import { Button } from './ui/button';
 	import { Pencil } from 'lucide-svelte';
 	import { createEventDispatcher } from 'svelte';
-	import Charts from './Charts.svelte';
 
 	export let project: ProjectT;
 
 	const dispatch = createEventDispatcher();
-
-	async function createDescriptor(e: Event) {
-		const target = e.target as HTMLFormElement;
-
-		const name = target.descriptor_name.value;
-		const description = target.description.value;
-		const type = target.type.value;
-
-		const res = await fetch('/api/descriptors', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				project_id: project.id,
-				name,
-				description,
-				type
-			})
-		});
-
-		if (!res.ok) {
-			// TODO: handle error
-			console.error('Failed to create descriptor');
-			return;
-		}
-
-		const json = await res.json();
-		project.descriptors.push(json);
-	}
 </script>
 
 <div>

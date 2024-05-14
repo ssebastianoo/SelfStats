@@ -60,10 +60,25 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 	return _json({
 		data: finalData
 	});
+};
 
-	// if (result) {
-	// 	return json(result[0]);
-	// } else {
-	// 	return new Response('There was an error creating the descriptor', { status: 500 });
-	// }
+export const PATCH: RequestHandler = async ({ cookies, request }) => {
+	const { user } = getUser(cookies);
+	if (!user) {
+		return new Response('Unauthorized', { status: 401 });
+	}
+
+	const json = await request.json();
+
+	if (!json.values) {
+		return new Response('Missing fields', { status: 400 });
+	}
+
+	const { data } = await supabase.from('values').upsert(json.values).select();
+
+	if (!data) {
+		return new Response('There was an error updating the value', { status: 500 });
+	}
+
+	return _json(data);
 };

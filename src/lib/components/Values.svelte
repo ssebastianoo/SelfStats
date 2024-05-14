@@ -1,9 +1,9 @@
 <script lang="ts">
+	import * as Table from '$lib/components/ui/table';
 	import type { ProjectT } from '$lib/types';
+	import EditValue from './EditValue.svelte';
 
 	export let project: ProjectT;
-
-	import * as Table from '$lib/components/ui/table';
 </script>
 
 <Table.Root>
@@ -14,6 +14,7 @@
 			{#each project.descriptors as descriptor}
 				<Table.Head>{descriptor.name}</Table.Head>
 			{/each}
+			<Table.Head></Table.Head>
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
@@ -28,6 +29,18 @@
 						</Table.Cell>
 					{/each}
 				{/if}
+				<Table.Cell
+					><EditValue
+						on:update={(event) => {
+							for (const value of event.detail) {
+								const index = data.values.findIndex((v) => v.id === value.id);
+								data.values[index] = value;
+							}
+						}}
+						{data}
+						descriptors={project.descriptors}
+					/></Table.Cell
+				>
 			</Table.Row>
 		{/each}
 	</Table.Body>
