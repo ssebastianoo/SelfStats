@@ -6,6 +6,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import type { DescriptorT } from '$lib/types';
 	import { project } from '$lib/store';
+	import { goto } from '$app/navigation';
 
 	export let data;
 
@@ -126,6 +127,24 @@
 			_data.values = _data.values.filter((v) => v.descriptor_id !== descriptor.id);
 		}
 	}
+
+	async function deleteProject() {
+		const res = await fetch('/api/projects', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				id: $project.id
+			})
+		});
+
+		if (!res.ok) {
+			return console.error('Failed to delete project');
+		}
+
+		goto('/');
+	}
 </script>
 
 {#if !editing}
@@ -146,6 +165,7 @@
 		>
 			Close
 		</Button>
+		<Button variant="destructive" size="sm" on:click={deleteProject}>Delete project</Button>
 	</div>
 	<hr class="my-4" />
 	<form on:submit|preventDefault={editProject} class="flex flex-col gap-2">
