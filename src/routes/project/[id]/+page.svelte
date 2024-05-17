@@ -2,11 +2,14 @@
 	import Project from '$lib/components/Project.svelte';
 	import { Input } from '$lib/components/ui/input';
 	import { Textarea } from '$lib/components/ui/textarea';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { Button } from '$lib/components/ui/button';
 	import { Label } from '$lib/components/ui/label';
 	import type { DescriptorT } from '$lib/types';
+	import { project } from '$lib/store';
 
 	export let data;
+
+	$project = data.project;
 
 	let editing = false;
 	let openSection: 'edit' | 'create' | null = null;
@@ -29,7 +32,7 @@
 			body: JSON.stringify({
 				name,
 				description,
-				project_id: data.project.id
+				project_id: $project.id
 			})
 		});
 
@@ -38,14 +41,14 @@
 		}
 
 		const json = await res.json();
-		data.project = json;
+		$project = json;
 	}
 
 	async function editDescriptors(e: Event) {
 		const target = e.target as HTMLFormElement;
 		let descriptors: DescriptorT[] = [];
 
-		for (const descriptor of data.project.descriptors) {
+		for (const descriptor of $project.descriptors) {
 			const newDescriptor = { ...descriptor };
 			newDescriptor.name = target['descriptor_name_' + descriptor.id].value;
 			newDescriptor.description = target['descriptor_description_' + descriptor.id].value;
@@ -70,7 +73,7 @@
 		}
 
 		const json = await res.json();
-		data.project.descriptors = json;
+		$project.descriptors = json;
 	}
 
 	async function createDescriptor(e: Event) {
@@ -86,7 +89,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				project_id: data.project.id,
+				project_id: $project.id,
 				name,
 				description,
 				type
@@ -100,7 +103,7 @@
 		}
 
 		const json = await res.json();
-		data.project.descriptors = [...data.project.descriptors, json];
+		$project.descriptors = [...$project.descriptors, json];
 	}
 
 	async function deleteDescriptor(descriptor: DescriptorT) {
@@ -118,8 +121,8 @@
 			return console.error('Failed to delete descriptor');
 		}
 
-		data.project.descriptors = data.project.descriptors.filter((d) => d.id !== descriptor.id);
-		for (const _data of data.project.data) {
+		$project.descriptors = $project.descriptors.filter((d) => d.id !== descriptor.id);
+		for (const _data of $project.data) {
 			_data.values = _data.values.filter((v) => v.descriptor_id !== descriptor.id);
 		}
 	}
@@ -127,7 +130,6 @@
 
 {#if !editing}
 	<Project
-		project={data.project}
 		on:edit={() => {
 			editing = true;
 		}}
@@ -154,7 +156,7 @@
 				type="text"
 				name="project_name"
 				placeholder="Statistics Project"
-				value={data.project.name}
+				value={$project.name}
 				required
 			/>
 		</div>
@@ -164,7 +166,7 @@
 				id="description"
 				name="description"
 				placeholder="My really cool statistics project."
-				value={data.project.description}
+				value={$project.description}
 			/>
 		</div>
 		<div class="flex justify-end">
@@ -193,7 +195,7 @@
 
 	{#if openSection === 'edit'}
 		<form on:submit|preventDefault={editDescriptors} class="flex flex-col gap-2">
-			{#each data.project.descriptors as descriptor}
+			{#each $project.descriptors as descriptor}
 				<div class="flex gap-2">
 					<Label for={'descriptor_name_' + descriptor.id} class="w-28">Name</Label>
 					<Input

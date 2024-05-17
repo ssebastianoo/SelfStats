@@ -1,15 +1,10 @@
 <script lang="ts">
-	import type { ProjectT } from '$lib/types';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Dialog as DialogPrimitive } from 'bits-ui';
 	import { buttonVariants, Button } from '$lib/components/ui/button';
 	import { Plus } from 'lucide-svelte';
 	import Input from './ui/input/input.svelte';
-	import { createEventDispatcher } from 'svelte';
-
-	export let project: ProjectT;
-
-	const dispatch = createEventDispatcher();
+	import { project } from '$lib/store';
 
 	async function addSimpleValue(e: Event) {
 		const res = await fetch('/api/values', {
@@ -18,7 +13,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				project_id: project.id
+				project_id: $project.id
 			})
 		});
 		if (!res.ok) {
@@ -27,9 +22,8 @@
 		}
 
 		const json = await res.json();
-		dispatch('newValue', {
-			data: json.data
-		});
+
+		$project.data = [json.data, ...$project.data];
 	}
 
 	async function addValue(e: Event) {
@@ -45,7 +39,7 @@
 			project_id: number;
 		}[] = [];
 
-		for (const descriptor of project.descriptors) {
+		for (const descriptor of $project.descriptors) {
 			const value = target['descriptor_' + descriptor.id].value;
 
 			values.push({
@@ -53,7 +47,7 @@
 				name: descriptor.name,
 				description: descriptor.description,
 				type: descriptor.type,
-				project_id: project.id,
+				project_id: $project.id,
 				value,
 				data_id: 0
 			});
@@ -65,7 +59,7 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				project_id: project.id,
+				project_id: $project.id,
 				values
 			})
 		});
@@ -77,13 +71,11 @@
 
 		const json = await res.json();
 
-		dispatch('newValue', {
-			data: json.data
-		});
+		$project.data = [json.data, ...$project.data];
 	}
 </script>
 
-{#if project.descriptors.length > 0}
+{#if $project.descriptors.length > 0}
 	<Dialog.Root>
 		<Dialog.Trigger class={buttonVariants({ variant: 'outline', size: 'sm' })}
 			><Plus /></Dialog.Trigger
@@ -93,7 +85,7 @@
 				<Dialog.Title>Register new data</Dialog.Title>
 			</Dialog.Header>
 			<form class="flex flex-col gap-3" on:submit|preventDefault={addValue}>
-				{#each project.descriptors as descriptor}
+				{#each $project.descriptors as descriptor}
 					<p>{descriptor.name}</p>
 					{#if descriptor.description}
 						<p>{descriptor.description}</p>

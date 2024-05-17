@@ -1,29 +1,27 @@
 <script lang="ts">
 	import * as Table from '$lib/components/ui/table';
-	import type { ProjectT } from '$lib/types';
 	import EditValue from './EditValue.svelte';
-
-	export let project: ProjectT;
+	import { project } from '$lib/store';
 </script>
 
-<Table.Root>
+<Table.Root class="h-[var(--fh)]">
 	<Table.Caption>Registered values</Table.Caption>
 	<Table.Header>
 		<Table.Row>
 			<Table.Head>Date</Table.Head>
-			{#each project.descriptors as descriptor}
+			{#each $project.descriptors as descriptor}
 				<Table.Head>{descriptor.name}</Table.Head>
 			{/each}
 			<Table.Head></Table.Head>
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
-		{#each project.data as data}
+		{#each $project.data as data}
 			<Table.Row>
 				<Table.Cell>{new Date(data.created_at).toDateString()}</Table.Cell>
 
 				{#if data.values}
-					{#each project.descriptors as descriptor}
+					{#each $project.descriptors as descriptor}
 						<Table.Cell>
 							{data.values.find((value) => value.descriptor_id === descriptor.id)?.value || ''}
 						</Table.Cell>
@@ -38,7 +36,7 @@
 							}
 						}}
 						{data}
-						descriptors={project.descriptors}
+						descriptors={$project.descriptors}
 					/></Table.Cell
 				>
 			</Table.Row>

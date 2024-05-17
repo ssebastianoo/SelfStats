@@ -82,3 +82,24 @@ export const PATCH: RequestHandler = async ({ cookies, request }) => {
 
 	return _json(data);
 };
+
+export const DELETE: RequestHandler = async ({ cookies, request }) => {
+	const { user } = getUser(cookies);
+	if (!user) {
+		return new Response('Unauthorized', { status: 401 });
+	}
+
+	const json = await request.json();
+	if (!json.id) {
+		return new Response('Missing fields', { status: 400 });
+	}
+
+	const { error: error1 } = await supabase.from('values').delete().eq('data_id', json.id);
+	const { error: error2 } = await supabase.from('data').delete().eq('id', json.id);
+
+	if (error1 || error2) {
+		return new Response('There was an error deleting the value', { status: 500 });
+	}
+
+	return new Response('Value deleted', { status: 200 });
+};

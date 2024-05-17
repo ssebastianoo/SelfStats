@@ -6,6 +6,7 @@
 	import type { DataT, DescriptorT, ValueT } from '$lib/types';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { createEventDispatcher } from 'svelte';
+	import { project } from '$lib/store';
 
 	const dispatch = createEventDispatcher();
 
@@ -49,6 +50,23 @@
 
 		open = false;
 	}
+
+	async function deleteData() {
+		const res = await fetch('/api/values', {
+			method: 'DELETE',
+			body: JSON.stringify({
+				id: data.id
+			})
+		});
+
+		if (!res.ok) {
+			return console.error('Failed to delete value');
+		}
+
+		open = false;
+
+		$project.data = $project.data.filter((d) => d.id !== data.id);
+	}
 </script>
 
 <Button
@@ -83,6 +101,7 @@
 				{/if}
 			{/each}
 			<div class="text-right">
+				<Button variant="destructive" size="sm" class="mr-1" on:click={deleteData}>Delete</Button>
 				<Button type="submit" size="sm">Save</Button>
 			</div>
 		</form>
