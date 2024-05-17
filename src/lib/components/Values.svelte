@@ -4,7 +4,7 @@
 	import { project } from '$lib/store';
 </script>
 
-<Table.Root class="h-[var(--fh)]">
+<Table.Root>
 	<Table.Caption>Registered values</Table.Caption>
 	<Table.Header>
 		<Table.Row>

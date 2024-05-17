@@ -5,6 +5,7 @@
 	import { Pencil } from 'lucide-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { project } from '$lib/store';
+	import Charts from './Charts.svelte';
 
 	const dispatch = createEventDispatcher();
 </script>
@@ -30,6 +31,6 @@
 		<h1 class="text-6xl">{$project.data.length}</h1>
 		<Register />
 	</div>
-	<!-- <Charts {project} /> -->
+	<Charts />
 	<Values />
 </div>
