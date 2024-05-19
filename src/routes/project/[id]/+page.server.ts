@@ -30,6 +30,7 @@ export const load = (async ({ params, cookies }) => {
 		.select('*')
 		.eq('project_id', params.id)
 		.order('created_at', { ascending: false });
+
 	const { data: valuesData } = await supabase
 		.from('values')
 		.select('*')

@@ -51,6 +51,7 @@ export const PATCH: RequestHandler = async ({ cookies, request }) => {
 			description: data.description || null
 		})
 		.eq('id', data.project_id)
+		.eq('user_id', user.sub)
 		.select();
 
 	if (result) {
@@ -69,6 +70,15 @@ export const DELETE: RequestHandler = async ({ cookies, request }) => {
 	const json = await request.json();
 	if (!json.id) {
 		return new Response('Missing fields', { status: 400 });
+	}
+
+	const { data: projectData } = await supabase.from('projects').select().eq('id', json.id);
+	if (!projectData) {
+		return new Response('Project not found', { status: 404 });
+	}
+
+	if (projectData[0].user_id !== user.sub) {
+		return new Response('Unauthorized', { status: 401 });
 	}
 
 	const { error: error1 } = await supabase.from('values').delete().eq('project_id', json.id);

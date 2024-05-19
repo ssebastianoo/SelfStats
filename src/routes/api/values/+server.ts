@@ -16,6 +16,15 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 		return new Response('Missing fields', { status: 400 });
 	}
 
+	const { data: projectData } = await supabase.from('projects').select().eq('id', json.project_id);
+	if (!projectData) {
+		return new Response('Project not found', { status: 404 });
+	}
+
+	if (projectData[0].user_id !== user.sub) {
+		return new Response('Unauthorized', { status: 401 });
+	}
+
 	const { data } = await supabase
 		.from('data')
 		.insert({
@@ -72,6 +81,20 @@ export const PATCH: RequestHandler = async ({ cookies, request }) => {
 
 	if (!json.values) {
 		return new Response('Missing fields', { status: 400 });
+	}
+
+	const { data: projectData } = await supabase
+		.from('projects')
+		.select()
+		.eq('id', json.values[0].project_id);
+	if (!projectData) {
+		return new Response('Project not found', { status: 404 });
+	}
+
+	for (const value of json.values) {
+		if (value.project_id !== projectData[0].id) {
+			return new Response('Value does not belong to project', { status: 400 });
+		}
 	}
 
 	const { data } = await supabase.from('values').upsert(json.values).select();

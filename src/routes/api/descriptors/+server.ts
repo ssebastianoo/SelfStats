@@ -15,6 +15,15 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 		return new Response('Missing fields', { status: 400 });
 	}
 
+	const { data: projectData } = await supabase.from('projects').select().eq('id', data.project_id);
+	if (!projectData) {
+		return new Response('Project not found', { status: 404 });
+	}
+
+	if (projectData[0].user_id !== user.sub) {
+		return new Response('Unauthorized', { status: 401 });
+	}
+
 	const { data: result } = await supabase
 		.from('descriptors')
 		.insert([
@@ -46,6 +55,20 @@ export const PATCH: RequestHandler = async ({ cookies, request }) => {
 		return new Response('Missing fields', { status: 400 });
 	}
 
+	const { data: projectData } = await supabase
+		.from('projects')
+		.select()
+		.eq('id', data.descriptors[0].project_id);
+	if (!projectData) {
+		return new Response('Invalid descriptor', { status: 404 });
+	}
+
+	for (const descriptor of data.descriptors) {
+		if (descriptor.project_id !== projectData[0].id) {
+			return new Response('Unauthorized', { status: 401 });
+		}
+	}
+
 	const { data: result } = await supabase.from('descriptors').upsert(data.descriptors).select();
 
 	if (result) {
@@ -70,6 +93,22 @@ export const DELETE: RequestHandler = async ({ cookies, request }) => {
 	const { data: descriptor } = await supabase.from('descriptors').select().eq('id', data.id);
 	if (!descriptor) {
 		return new Response('Descriptor not found', { status: 404 });
+	}
+
+	const { data: projectData } = await supabase
+		.from('projects')
+		.select()
+		.eq('id', descriptor[0].project_id);
+	if (!projectData) {
+		return new Response('Project not found', { status: 404 });
+	}
+
+	if (projectData[0].user_id !== user.sub) {
+		return new Response('Unauthorized', { status: 401 });
+	}
+
+	if (projectData[0].user_id !== user.sub) {
+		return new Response('Unauthorized', { status: 401 });
 	}
 
 	await supabase.from('values').delete().eq('descriptor_id', data.id);
