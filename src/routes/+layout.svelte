@@ -7,6 +7,7 @@
 	import { user } from '$lib/store';
 	import { getCookie, setCookie } from '$lib/utils';
 	import { Home } from 'lucide-svelte';
+	import { page } from '$app/stores';
 	import './app.css';
 
 	let logged = false;
@@ -42,8 +43,7 @@
 					access_type: 'offline',
 					prompt: 'consent'
 				},
-				redirectTo:
-					process.env.NODE_ENV === 'development' ? 'http://localhost:5173/callback' : undefined
+				redirectTo: $page.url.origin + '/callback'
 			}
 		});
 	}
