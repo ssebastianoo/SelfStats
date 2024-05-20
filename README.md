@@ -7,3 +7,4 @@ Selfstats
 - [ ] Graph renderer
 - [ ] Delete warning
 - [x] Desktop view
+- [ ] Loading screen

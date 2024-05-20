@@ -5,6 +5,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import type { ProjectT } from '$lib/types';
+	import { alert } from '$lib/store';
 
 	export let data;
 	let dialogOpen = false;
@@ -29,13 +30,25 @@
 		});
 
 		if (!res.ok) {
-			// TODO: handle error
+			$alert = {
+				title: 'Error',
+				description: "Couldn't create project",
+				show: true,
+				danger: true
+			};
 			return console.error('Failed to create project');
 		}
 
 		const json = await res.json();
 		data.projects = [...data.projects, json];
 		dialogOpen = false;
+
+		$alert = {
+			title: 'Success',
+			description: 'Project created successfully',
+			show: true,
+			danger: false
+		};
 	}
 
 	async function editProject(e: Event) {
@@ -65,6 +78,12 @@
 		});
 
 		if (!res.ok) {
+			$alert = {
+				title: 'Error',
+				description: "Couldn't edit project",
+				show: true,
+				danger: true
+			};
 			return console.error('Failed to edit project');
 		}
 
@@ -77,6 +96,13 @@
 		});
 
 		editingProject = null;
+
+		$alert = {
+			title: 'Success',
+			description: 'Project edited successfully',
+			show: true,
+			danger: false
+		};
 	}
 </script>
 

@@ -7,6 +7,7 @@
 	import type { DescriptorT } from '$lib/types';
 	import { project } from '$lib/store';
 	import { goto } from '$app/navigation';
+	import { alert } from '$lib/store';
 
 	export let data;
 
@@ -69,12 +70,24 @@
 		});
 
 		if (!res.ok) {
-			// TODO: handle error
+			$alert = {
+				title: 'Error',
+				description: "Couln't update descriptors",
+				show: true,
+				danger: true
+			};
 			return console.error(res);
 		}
 
 		const json = await res.json();
 		$project.descriptors = json;
+
+		$alert = {
+			title: 'Success',
+			description: 'Descriptors updated',
+			show: true,
+			danger: false
+		};
 	}
 
 	async function createDescriptor(e: Event) {
@@ -105,6 +118,13 @@
 
 		const json = await res.json();
 		$project.descriptors = [...$project.descriptors, json];
+
+		$alert = {
+			title: 'Success',
+			description: 'Descriptor created',
+			show: true,
+			danger: false
+		};
 	}
 
 	async function deleteDescriptor(descriptor: DescriptorT) {
