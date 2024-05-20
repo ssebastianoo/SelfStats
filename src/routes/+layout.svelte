@@ -5,7 +5,7 @@
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { Button } from '$lib/components/ui/button';
 	import { user } from '$lib/store';
-	import { getCookie, setCookie } from '$lib/utils';
+	import { getCookie, setCookie, deleteCookie } from '$lib/utils';
 	import { Home } from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import './app.css';
@@ -47,6 +47,12 @@
 			}
 		});
 	}
+
+	function logout() {
+		deleteCookie('token');
+		supabase.auth.signOut();
+		location.reload();
+	}
 </script>
 
 <Toaster />
@@ -55,14 +61,7 @@
 	<main class="p-7">
 		<header class="flex justify-between mb-4 items-center">
 			<a href="/"><Home size="30" /></a>
-			<Button
-				variant="outline"
-				size="sm"
-				on:click={() => {
-					supabase.auth.signOut();
-					location.reload();
-				}}>Logout</Button
-			>
+			<Button variant="outline" size="sm" on:click={logout}>Logout</Button>
 		</header>
 		<div>
 			<slot />
