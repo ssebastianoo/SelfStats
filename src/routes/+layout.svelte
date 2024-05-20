@@ -58,13 +58,15 @@
 <Toaster />
 
 {#if logged}
-	<main class="p-7">
-		<header class="flex justify-between mb-4 items-center">
-			<a href="/"><Home size="30" /></a>
-			<Button variant="outline" size="sm" on:click={logout}>Logout</Button>
-		</header>
-		<div>
-			<slot />
+	<main class="p-7 flex justify-center">
+		<div class="max-w-[800px] w-full">
+			<header class="flex justify-between mb-4 items-center">
+				<a href="/"><Home size="30" /></a>
+				<Button variant="outline" size="sm" on:click={logout}>Logout</Button>
+			</header>
+			<div>
+				<slot />
+			</div>
 		</div>
 	</main>
 {:else}
