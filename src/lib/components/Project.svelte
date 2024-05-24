@@ -8,6 +8,8 @@
 	import Charts from './Charts.svelte';
 
 	const dispatch = createEventDispatcher();
+
+	console.log($project);
 </script>
 
 <div>

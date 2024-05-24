@@ -42,7 +42,7 @@ export const load = (async ({ params, cookies }) => {
 		if (datasData) {
 			project.data = datasData;
 
-			if (valuesData) {
+			if (valuesData && valuesData.length > 0) {
 				for (const value of valuesData) {
 					const linkedData = project.data.find((data) => data.id === value.data_id);
 					if (linkedData) {
@@ -50,7 +50,13 @@ export const load = (async ({ params, cookies }) => {
 						linkedData.values.push(value);
 					}
 				}
+			} else {
+				for (const data of project.data) {
+					data.values = [];
+				}
 			}
+		} else {
+			project.data = [];
 		}
 	} else {
 		throw error(404, 'Project not found');
