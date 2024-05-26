@@ -6,6 +6,6 @@ export const project = writable<ProjectT>();
 export const alert = writable({
 	show: false,
 	danger: false,
-	title: 'afdsf',
+	title: '',
 	description: '' as string | null
 });

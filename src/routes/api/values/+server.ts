@@ -86,7 +86,8 @@ export const PATCH: RequestHandler = async ({ cookies, request }) => {
 	const { data: projectData } = await supabase
 		.from('projects')
 		.select()
-		.eq('id', json.values[0].project_id);
+		.eq('id', json.values[0].project_id)
+		.eq('user_id', user.sub);
 	if (!projectData) {
 		return new Response('Project not found', { status: 404 });
 	}
@@ -101,6 +102,21 @@ export const PATCH: RequestHandler = async ({ cookies, request }) => {
 
 	if (!data) {
 		return new Response('There was an error updating the value', { status: 500 });
+	}
+
+	if (json.data_id && json.date) {
+		const { data: dataData } = await supabase
+			.from('data')
+			.update({
+				created_at: json.date
+			})
+			.eq('id', json.data_id)
+			.eq('project_id', projectData[0].id)
+			.select();
+
+		if (!dataData) {
+			return new Response('There was an error updating the date', { status: 500 });
+		}
 	}
 
 	return _json(data);

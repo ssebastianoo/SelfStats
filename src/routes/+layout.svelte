@@ -60,7 +60,6 @@
 
 	alert.subscribe((value) => {
 		if (value.show) {
-			console.log(value);
 			alertElement.animate([{ transform: 'translateX(100%)' }, { transform: 'translateX(0)' }], {
 				duration: 900,
 				easing: 'cubic-bezier(0.14, 0.62, 0.58, 1)',

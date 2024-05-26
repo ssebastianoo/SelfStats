@@ -17,29 +17,33 @@
 	</Table.Header>
 	<Table.Body>
 		{#each $project.data as data}
-			<Table.Row>
-				<Table.Cell>{new Date(data.created_at).toDateString()}</Table.Cell>
+			{#key data}
+				<Table.Row>
+					<Table.Cell>{new Date(data.created_at).toDateString()}</Table.Cell>
 
-				{#if data.values}
-					{#each $project.descriptors as descriptor}
-						<Table.Cell>
-							{data.values.find((value) => value.descriptor_id === descriptor.id)?.value || ''}
-						</Table.Cell>
-					{/each}
-				{/if}
-				<Table.Cell
-					><EditValue
-						on:update={(event) => {
-							for (const value of event.detail) {
-								const index = data.values.findIndex((v) => v.id === value.id);
-								data.values[index] = value;
-							}
-						}}
-						{data}
-						descriptors={$project.descriptors}
-					/></Table.Cell
-				>
-			</Table.Row>
+					{#if data.values}
+						{#each $project.descriptors as descriptor}
+							<Table.Cell>
+								{data.values.find((value) => value.descriptor_id === descriptor.id)?.value || ''}
+							</Table.Cell>
+						{/each}
+					{/if}
+					<Table.Cell
+						><EditValue
+							on:update={(event) => {
+								for (const value of event.detail.values) {
+									const index = data.values.findIndex((v) => v.id === value.id);
+									data.values[index] = value;
+								}
+
+								if (event.detail.date) data.created_at = event.detail.date;
+							}}
+							{data}
+							descriptors={$project.descriptors}
+						/></Table.Cell
+					>
+				</Table.Row>
+			{/key}
 		{/each}
 	</Table.Body>
 </Table.Root>
