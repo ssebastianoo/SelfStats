@@ -79,32 +79,43 @@ export const PATCH: RequestHandler = async ({ cookies, request }) => {
 
 	const json = await request.json();
 
-	if (!json.values) {
+	if (!json.values || !json.data_id) {
 		return new Response('Missing fields', { status: 400 });
+	}
+
+	const { data: datasData } = await supabase.from('data').select().eq('id', json.data_id);
+	if (!datasData) {
+		return new Response('Data not found', { status: 404 });
 	}
 
 	const { data: projectData } = await supabase
 		.from('projects')
 		.select()
-		.eq('id', json.values[0].project_id)
+		.eq('id', datasData[0].project_id)
 		.eq('user_id', user.sub);
 	if (!projectData) {
 		return new Response('Project not found', { status: 404 });
 	}
 
-	for (const value of json.values) {
-		if (value.project_id !== projectData[0].id) {
-			return new Response('Value does not belong to project', { status: 400 });
+	let newValues: ValueT[] = [];
+
+	if (json.values.length > 0) {
+		for (const value of json.values) {
+			if (value.project_id !== projectData[0].id) {
+				return new Response('Value does not belong to project', { status: 400 });
+			}
 		}
+
+		const { data } = await supabase.from('values').upsert(json.values).select();
+
+		if (!data) {
+			return new Response('There was an error updating the value', { status: 500 });
+		}
+
+		newValues = data;
 	}
 
-	const { data } = await supabase.from('values').upsert(json.values).select();
-
-	if (!data) {
-		return new Response('There was an error updating the value', { status: 500 });
-	}
-
-	if (json.data_id && json.date) {
+	if (json.date) {
 		const { data: dataData } = await supabase
 			.from('data')
 			.update({
@@ -119,7 +130,7 @@ export const PATCH: RequestHandler = async ({ cookies, request }) => {
 		}
 	}
 
-	return _json(data);
+	return _json(newValues);
 };
 
 export const DELETE: RequestHandler = async ({ cookies, request }) => {
