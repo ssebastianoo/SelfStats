@@ -150,8 +150,8 @@
 		</Dialog.Header>
 		<form class="flex flex-col gap-2" on:submit|preventDefault={editValue}>
 			<div class="flex gap-2">
-				<Label class="min-w-24" for="date">Date</Label>
-				<div class="flex justify-between gap-2 w-full items-center">
+				<Label class="w-24" for="date">Date</Label>
+				<div class="flex justify-between gap-1 w-full items-center">
 					<Input class="w-full" id="date" type="date" value={day} name="date" />
 					<Input
 						class="w-12 text-center"
@@ -178,7 +178,7 @@
 			{#each data.values as value}
 				{#if descriptors.find((descriptor) => value.descriptor_id === descriptor.id)}
 					<div class="flex gap-2">
-						<Label class="min-w-24" for={'value_' + value.id}
+						<Label class="w-24" for={'value_' + value.id}
 							>{descriptors.find((descriptor) => value.descriptor_id === descriptor.id)
 								?.name}</Label
 						>
