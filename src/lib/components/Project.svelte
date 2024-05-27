@@ -31,6 +31,8 @@
 		<h1 class="text-6xl">{$project.data.length}</h1>
 		<Register />
 	</div>
-	<Charts />
+	{#key $project.data}
+		<Charts />
+	{/key}
 	<Values />
 </div>
