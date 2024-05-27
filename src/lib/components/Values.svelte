@@ -20,7 +20,12 @@
 			{#each $project.data as data}
 				{#key data}
 					<Table.Row>
-						<Table.Cell class="w-fit">{new Date(data.created_at).toDateString()}</Table.Cell>
+						<Table.Cell class="w-fit"
+							>{new Date(data.created_at)
+								.toLocaleString()
+								.replace(',', '')
+								.slice(0, -3)}</Table.Cell
+						>
 
 						{#if data.values}
 							{#each $project.descriptors as descriptor}

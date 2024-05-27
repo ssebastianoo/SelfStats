@@ -4,7 +4,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Alert from '$lib/components/ui/alert';
 	import { supabase } from '$lib/supabase';
-	import { Home } from 'lucide-svelte';
+	import { Home, Loader } from 'lucide-svelte';
 	import '@fontsource-variable/inter';
 	import { page } from '$app/stores';
 	import { user } from '$lib/store';
@@ -13,6 +13,7 @@
 	import { alert } from '$lib/store';
 
 	let logged = false;
+	let loaded = false;
 
 	onMount(async () => {
 		if (!$user) {
@@ -21,7 +22,7 @@
 			if (data.user) {
 				const token = getCookie('token');
 				if (!token) {
-					const { data: sessionData, error } = await supabase.auth.getSession();
+					const { data: sessionData } = await supabase.auth.getSession();
 
 					if (sessionData.session) {
 						setCookie('token', sessionData.session.access_token, 7);
@@ -35,6 +36,7 @@
 		} else {
 			logged = true;
 		}
+		loaded = true;
 	});
 
 	function login() {
@@ -95,7 +97,11 @@
 	</Alert.Root>
 </div>
 
-{#if logged}
+{#if !loaded}
+	<div class="flex justify-center items-center h-[var(--fh)]">
+		<Loader />
+	</div>
+{:else if logged}
 	<main class="p-7 flex justify-center">
 		<div class="max-w-[800px] w-full">
 			<header class="flex justify-between mb-4 items-center">
