@@ -9,34 +9,28 @@
 	import { goto } from '$app/navigation';
 	import { alert } from '$lib/store';
 	import { onMount } from 'svelte';
+	import { getProjects, setProjects, updateProject } from '$lib/utils';
 
 	export let data;
 
 	let editing = false;
 	let openSection: 'edit' | 'create' | null = null;
+	let loaded = false;
+	let projectNotFound = false;
 
 	onMount(() => {
-		let projects: ProjectT[] = [];
-		if (localStorage.getItem('projects')) {
-			projects = JSON.parse(localStorage.getItem('projects')!);
+		let projects = getProjects();
+		if (projects.length > 0) {
 			const _project = projects.find((p) => p.id === data.project_id);
 			if (_project) {
 				$project = _project;
+				loaded = true;
 				return;
 			}
 		}
+		loaded = true;
+		projectNotFound = true;
 	});
-
-	function getProjects() {
-		if (!localStorage.getItem('projects')) {
-			localStorage.setItem('projects', JSON.stringify([]));
-		}
-		return JSON.parse(localStorage.getItem('projects')!) as ProjectT[];
-	}
-
-	function setProjects(projects: ProjectT[]) {
-		localStorage.setItem('projects', JSON.stringify(projects));
-	}
 
 	async function editProject(e: Event) {
 		const target = e.target as HTMLFormElement;
@@ -61,43 +55,27 @@
 		});
 
 		setProjects(projects);
+
+		$alert = {
+			title: 'Success',
+			description: 'Project updated',
+			show: true,
+			danger: false
+		};
+
+		target.reset();
 	}
 
 	async function editDescriptors(e: Event) {
 		const target = e.target as HTMLFormElement;
-		let descriptors: DescriptorT[] = [];
 
 		for (const descriptor of $project.descriptors) {
-			const newDescriptor = { ...descriptor };
-			newDescriptor.name = target['descriptor_name_' + descriptor.id].value;
-			newDescriptor.description = target['descriptor_description_' + descriptor.id].value;
-			newDescriptor.type = target['descriptor_type_' + descriptor.id].value;
-
-			descriptors.push(newDescriptor);
+			descriptor.name = target['descriptor_name_' + descriptor.id].value;
+			descriptor.description = target['descriptor_description_' + descriptor.id].value;
+			descriptor.type = target['descriptor_type_' + descriptor.id].value;
 		}
 
-		const res = await fetch(`/api/descriptors`, {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				descriptors
-			})
-		});
-
-		if (!res.ok) {
-			$alert = {
-				title: 'Error',
-				description: "Couln't update descriptors",
-				show: true,
-				danger: true
-			};
-			return console.error(res);
-		}
-
-		const json = await res.json();
-		$project.descriptors = json;
+		updateProject($project);
 
 		$alert = {
 			title: 'Success',
@@ -114,27 +92,17 @@
 		const description = target.description.value;
 		const type = target.type.value;
 
-		const res = await fetch('/api/descriptors', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				project_id: $project.id,
-				name,
-				description,
-				type
-			})
-		});
+		const newDescriptor: DescriptorT = {
+			id: Date.now(),
+			name,
+			description,
+			type,
+			project_id: $project.id
+		};
 
-		if (!res.ok) {
-			// TODO: handle error
-			console.error('Failed to create descriptor');
-			return;
-		}
+		$project.descriptors = [...$project.descriptors, newDescriptor];
 
-		const json = await res.json();
-		$project.descriptors = [...$project.descriptors, json];
+		updateProject($project);
 
 		$alert = {
 			title: 'Success',
@@ -142,50 +110,43 @@
 			show: true,
 			danger: false
 		};
+
+		target.reset();
 	}
 
 	async function deleteDescriptor(descriptor: DescriptorT) {
-		const res = await fetch(`/api/descriptors`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				id: descriptor.id
-			})
-		});
-
-		if (!res.ok) {
-			return console.error('Failed to delete descriptor');
-		}
-
 		$project.descriptors = $project.descriptors.filter((d) => d.id !== descriptor.id);
 		for (const _data of $project.data) {
 			_data.values = _data.values.filter((v) => v.descriptor_id !== descriptor.id);
 		}
+
+		updateProject($project);
+
+		$alert = {
+			title: 'Success',
+			description: 'Descriptor deleted',
+			show: true,
+			danger: false
+		};
 	}
 
 	async function deleteProject() {
-		const res = await fetch('/api/projects', {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				id: $project.id
-			})
-		});
-
-		if (!res.ok) {
-			return console.error('Failed to delete project');
-		}
-
+		const projects = getProjects();
+		setProjects(projects.filter((p) => p.id !== $project.id));
+		$alert = {
+			title: 'Success',
+			description: 'Project deleted',
+			show: true,
+			danger: false
+		};
 		goto('/');
 	}
 </script>
 
-{#if $project}
-	{#if !editing}
+{#if loaded}
+	{#if projectNotFound}
+		<p>Project not found</p>
+	{:else if !editing}
 		<Project
 			on:edit={() => {
 				editing = true;
@@ -344,4 +305,6 @@
 			</form>
 		{/if}
 	{/if}
+{:else}
+	<p>loading</p>
 {/if}

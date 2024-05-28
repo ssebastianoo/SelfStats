@@ -5,39 +5,25 @@
 	import { Plus } from 'lucide-svelte';
 	import Input from './ui/input/input.svelte';
 	import { project } from '$lib/store';
+	import { getProjects, setProjects, updateProject } from '$lib/utils';
+	import type { DataT, ValueT } from '$lib/types';
 
 	async function addSimpleValue(e: Event) {
-		const res = await fetch('/api/values', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				project_id: $project.id
-			})
-		});
-		if (!res.ok) {
-			// TODO: add error handling
-			return console.error('Error adding value');
-		}
+		const newData: DataT = {
+			id: Date.now(),
+			created_at: new Date().toISOString(),
+			values: [],
+			project_id: $project.id
+		};
 
-		const json = await res.json();
-
-		$project.data = [json.data, ...$project.data];
+		$project.data = [newData, ...$project.data];
+		updateProject($project);
 	}
 
 	async function addValue(e: Event) {
 		const target = e.target as HTMLFormElement;
 
-		let values: {
-			descriptor_id: number;
-			name: string;
-			description: string | null;
-			type: string;
-			value: string;
-			data_id: number;
-			project_id: number;
-		}[] = [];
+		let values: ValueT[] = [];
 
 		for (const descriptor of $project.descriptors) {
 			const value = target['descriptor_' + descriptor.id].value;
@@ -49,29 +35,21 @@
 				type: descriptor.type,
 				project_id: $project.id,
 				value,
-				data_id: 0
+				id: parseInt(
+					Date.now().toString().slice(-5) + Math.floor(1000000 + Math.random() * 9000000).toString()
+				)
 			});
 		}
 
-		const res = await fetch('/api/values', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				project_id: $project.id,
-				values
-			})
-		});
+		const data: DataT = {
+			id: Date.now(),
+			created_at: new Date().toISOString(),
+			values,
+			project_id: $project.id
+		};
 
-		if (!res.ok) {
-			// TODO: handle error
-			return console.error('Error adding values');
-		}
-
-		const json = await res.json();
-
-		$project.data = [json.data, ...$project.data];
+		$project.data = [data, ...$project.data];
+		updateProject($project);
 	}
 </script>
 

@@ -1,62 +1,10 @@
 <script lang="ts">
-	import { getCookie, setCookie, deleteCookie } from '$lib/utils';
 	import { Toaster } from '$lib/components/ui/sonner';
-	import { Button } from '$lib/components/ui/button';
 	import * as Alert from '$lib/components/ui/alert';
-	import { supabase } from '$lib/supabase';
-	import { Home, Loader } from 'lucide-svelte';
+	import { Home } from 'lucide-svelte';
 	import '@fontsource-variable/inter';
-	import { page } from '$app/stores';
-	import { user } from '$lib/store';
-	import { onMount } from 'svelte';
 	import './app.css';
 	import { alert } from '$lib/store';
-
-	let logged = false;
-	let loaded = false;
-
-	onMount(async () => {
-		if (!$user) {
-			const { data } = await supabase.auth.getUser();
-
-			if (data.user) {
-				const token = getCookie('token');
-				if (!token) {
-					const { data: sessionData } = await supabase.auth.getSession();
-
-					if (sessionData.session) {
-						setCookie('token', sessionData.session.access_token, 7);
-					} else {
-						throw new Error("Couldn't log in");
-					}
-				}
-				$user = data.user;
-				logged = true;
-			}
-		} else {
-			logged = true;
-		}
-		loaded = true;
-	});
-
-	function login() {
-		supabase.auth.signInWithOAuth({
-			provider: 'google',
-			options: {
-				queryParams: {
-					access_type: 'offline',
-					prompt: 'consent'
-				},
-				redirectTo: $page.url.origin + '/callback'
-			}
-		});
-	}
-
-	function logout() {
-		deleteCookie('token');
-		supabase.auth.signOut();
-		location.reload();
-	}
 
 	let alertElement: HTMLDivElement;
 
@@ -97,24 +45,13 @@
 	</Alert.Root>
 </div>
 
-{#if !loaded}
-	<div class="flex justify-center items-center h-[var(--fh)]">
-		<Loader />
-	</div>
-{:else if logged}
-	<main class="p-7 flex justify-center">
-		<div class="max-w-[800px] w-full">
-			<header class="flex justify-between mb-4 items-center">
-				<a href="/"><Home size="30" /></a>
-				<Button variant="outline" size="sm" on:click={logout}>Logout</Button>
-			</header>
-			<div>
-				<slot />
-			</div>
+<main class="p-7 flex justify-center">
+	<div class="max-w-[800px] w-full">
+		<header class="flex justify-between mb-4 items-center">
+			<a href="/"><Home size="30" /></a>
+		</header>
+		<div>
+			<slot />
 		</div>
-	</main>
-{:else}
-	<div class="flex justify-center items-center h-[var(--fh)]">
-		<Button on:click={login}>Login</Button>
 	</div>
-{/if}
+</main>

@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
+import type { ProjectT } from '$lib/types';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -80,4 +81,27 @@ export function getCookie(cname: string) {
 
 export function deleteCookie(cname: string) {
 	document.cookie = cname + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
+
+export function getProjects() {
+	if (!localStorage.getItem('projects')) {
+		localStorage.setItem('projects', JSON.stringify([]));
+	}
+	return JSON.parse(localStorage.getItem('projects')!) as ProjectT[];
+}
+
+export function setProjects(projects: ProjectT[]) {
+	localStorage.setItem('projects', JSON.stringify(projects));
+}
+
+export function updateProject(project: ProjectT) {
+	const projects = getProjects();
+	setProjects(
+		projects.map((p) => {
+			if (p.id === project.id) {
+				return project;
+			}
+			return p;
+		})
+	);
 }

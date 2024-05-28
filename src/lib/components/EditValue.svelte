@@ -8,6 +8,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { project } from '$lib/store';
 	import { alert } from '$lib/store';
+	import { updateProject } from '$lib/utils';
 
 	const dispatch = createEventDispatcher();
 
@@ -34,47 +35,23 @@
 			}
 		}
 
-		let values: {
-			value: string;
-			id: number;
-		}[] = [];
-
 		for (const valueData of data.values) {
-			const v = { ...valueData };
-
 			const value = target['value_' + valueData.id].value;
-			v.value = value;
-
-			values.push(v);
+			valueData.value = value;
 		}
 
-		const res = await fetch('/api/values', {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				values,
-				date,
-				data_id: data.id
-			})
+		$project.data = $project.data.map((d) => {
+			if (d.id === data.id) {
+				d.values = data.values;
+
+				if (date) {
+					d.created_at = date.toISOString();
+				}
+			}
+			return d;
 		});
 
-		if (!res.ok) {
-			$alert = {
-				show: true,
-				danger: true,
-				title: 'Error',
-				description: 'Failed to update value'
-			};
-			return;
-		}
-
-		const json = await res.json();
-		dispatch('update', {
-			values: json as ValueT[],
-			date: date?.toISOString()
-		});
+		updateProject($project);
 
 		open = false;
 

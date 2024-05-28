@@ -2,7 +2,6 @@ export type ProjectT = {
 	id: number;
 	name: string;
 	description: string | null;
-	user_id: string;
 	descriptors: DescriptorT[];
 	data: DataT[];
 };
@@ -25,7 +24,6 @@ export type DescriptorT = {
 export type ValueT = {
 	id: number;
 	descriptor_id: number;
-	data_id: string;
 	name: string;
 	description: string | null;
 	value: string;
