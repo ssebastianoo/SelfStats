@@ -64,26 +64,17 @@
 	}
 
 	async function deleteData() {
-		const res = await fetch('/api/values', {
-			method: 'DELETE',
-			body: JSON.stringify({
-				id: data.id
-			})
-		});
-
-		if (!res.ok) {
-			$alert = {
-				show: true,
-				danger: true,
-				title: 'Error',
-				description: 'Failed to delete value'
-			};
-			return;
-		}
+		$project.data = $project.data.filter((d) => d.id !== data.id);
+		updateProject($project);
 
 		open = false;
 
-		$project.data = $project.data.filter((d) => d.id !== data.id);
+		$alert = {
+			show: true,
+			danger: false,
+			title: 'Success',
+			description: 'Data deleted successfully'
+		};
 	}
 
 	const day = data.created_at.split(':')[0].slice(0, -3);

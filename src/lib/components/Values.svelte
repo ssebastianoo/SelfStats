@@ -2,6 +2,10 @@
 	import * as Table from '$lib/components/ui/table';
 	import EditValue from './EditValue.svelte';
 	import { project } from '$lib/store';
+
+	$: projectData = $project.data.sort(
+		(a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+	);
 </script>
 
 <div class="w-full overflow-auto">
@@ -17,7 +21,7 @@
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
-			{#each $project.data as data}
+			{#each projectData as data}
 				{#key data}
 					<Table.Row>
 						<Table.Cell class="w-fit"

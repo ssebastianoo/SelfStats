@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Toaster } from '$lib/components/ui/sonner';
 	import * as Alert from '$lib/components/ui/alert';
-	import { Home } from 'lucide-svelte';
+	import { Home, FileArchive } from 'lucide-svelte';
 	import '@fontsource-variable/inter';
 	import './app.css';
 	import { alert } from '$lib/store';
@@ -49,6 +49,7 @@
 	<div class="max-w-[800px] w-full">
 		<header class="flex justify-between mb-4 items-center">
 			<a href="/"><Home size="30" /></a>
+			<a href="/data"><FileArchive size="30" /></a>
 		</header>
 		<div>
 			<slot />
