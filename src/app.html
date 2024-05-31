@@ -31,10 +31,6 @@
 			window.addEventListener('resize', () => {
 				document.documentElement.style.setProperty('--fh', window.innerHeight + 'px');
 			});
-
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker.register('./sw.js');
-			}
 		</script>
 	</body>
 </html>

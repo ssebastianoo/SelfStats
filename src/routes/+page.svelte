@@ -67,6 +67,11 @@
 	</div>
 
 	<div class="flex flex-col gap-2">
+		{#if projects.length === 0}
+			<div class="flex justify-center">
+				<p class="text-muted-foreground">No projects found, try creating one</p>
+			</div>
+		{/if}
 		{#each projects as project}
 			<a href={'/project/' + project.id} class="border rounded-md p-2 hover:border-white">
 				<h2 class="text-lg">{project.name}</h2>
