@@ -156,6 +156,10 @@
 							type={descriptors.find((descriptor) => value.descriptor_id === descriptor.id)?.type}
 							name={'value_' + value.id}
 							value={value.value}
+							step={descriptors.find((descriptor) => value.descriptor_id === descriptor.id)
+								?.type === 'number'
+								? '0.0000001'
+								: undefined}
 						/>
 					</div>
 				{/if}
