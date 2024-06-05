@@ -5,11 +5,12 @@
 	import '@fontsource-variable/inter';
 	import './app.css';
 	import { alert } from '$lib/store';
-	import { signIn } from '@auth/sveltekit/client';
+	import { signIn, signOut } from '@auth/sveltekit/client';
 	import { Button } from '$lib/components/ui/button';
 	import { page } from '$app/stores';
-
-	console.log($page.data.session);
+	import { onMount } from 'svelte';
+	import { getProjects, setProjects } from '$lib/utils';
+	import { projects } from '$lib/store';
 
 	let alertElement: HTMLDivElement;
 
@@ -30,6 +31,34 @@
 				});
 			}, 2000);
 		}
+	});
+
+	function sync() {
+		const projects = getProjects();
+
+		fetch('/api/sync', {
+			method: 'POST',
+			body: JSON.stringify(projects)
+		});
+	}
+
+	onMount(async () => {
+		$projects = getProjects();
+
+		const res = await fetch('/api/sync');
+		const data = await res.json();
+
+		setProjects(data, true);
+
+		// setInterval(() => {
+		// 	const projects = getProjects();
+		// 	console.log('aaa');
+
+		// 	fetch('/api/sync', {
+		// 		method: 'POST',
+		// 		body: JSON.stringify(projects)
+		// 	});
+		// }, 10000);
 	});
 </script>
 
@@ -54,13 +83,23 @@
 	<div class="max-w-[800px] w-full">
 		<header class="flex justify-between mb-4 items-center">
 			<a href="/"><Home size="30" /></a>
-			<Button
-				variant="outline"
-				size="sm"
-				on:click={() => {
-					signIn();
-				}}>LogIn</Button
-			>
+			{#if $page.data.session}
+				<Button
+					variant="outline"
+					size="sm"
+					on:click={() => {
+						signOut();
+					}}>Logout</Button
+				>
+			{:else}
+				<Button
+					variant="outline"
+					size="sm"
+					on:click={() => {
+						signIn();
+					}}>Login</Button
+				>
+			{/if}
 			<a href="/data"><FileArchive size="30" /></a>
 		</header>
 		<div>

@@ -8,13 +8,9 @@
 	import { alert } from '$lib/store';
 	import { getProjects, setProjects } from '$lib/utils';
 	import { onMount } from 'svelte';
-
+	import { projects } from '$lib/store';
+[]
 	let dialogOpen = false;
-	let projects: ProjectT[];
-
-	onMount(() => {
-		projects = getProjects();
-	});
 
 	async function createProject(e: Event) {
 		const target = e.target as HTMLFormElement;
@@ -30,8 +26,8 @@
 			descriptors: []
 		};
 
-		projects = [newProject, ...projects];
-		setProjects(projects);
+		$projects = [newProject, ...$projects];
+		setProjects($projects);
 
 		dialogOpen = false;
 
@@ -67,12 +63,12 @@
 	</div>
 
 	<div class="flex flex-col gap-2">
-		{#if projects.length === 0}
+		{#if $projects.length === 0}
 			<div class="flex justify-center">
 				<p class="text-muted-foreground">No projects found, try creating one</p>
 			</div>
 		{/if}
-		{#each projects as project}
+		{#each $projects as project}
 			<a href={'/project/' + project.id} class="border rounded-md p-2 hover:border-white">
 				<h2 class="text-lg">{project.name}</h2>
 				{#if project.description}

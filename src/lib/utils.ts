@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 import type { ProjectT } from '$lib/types';
+import { projects as prj } from '$lib/store';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -63,8 +64,10 @@ export function getProjects() {
 	return JSON.parse(localStorage.getItem('projects')!) as ProjectT[];
 }
 
-export function setProjects(projects: ProjectT[]) {
+export function setProjects(projects: ProjectT[], updateGlobalValue = false) {
 	localStorage.setItem('projects', JSON.stringify(projects));
+	localStorage.setItem('lastUpdated', new Date().toISOString());
+	if (updateGlobalValue) prj.set(projects);
 }
 
 export function updateProject(project: ProjectT) {
