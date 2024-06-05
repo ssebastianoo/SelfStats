@@ -72,6 +72,7 @@
 						name={'descriptor_' + descriptor.id}
 						type={descriptor.type}
 						placeholder={descriptor.type === 'text' ? 'Enter text' : 'Enter number'}
+						step={descriptor.type === 'number' ? '0.0000001' : undefined}
 						required
 					/>
 				{/each}
