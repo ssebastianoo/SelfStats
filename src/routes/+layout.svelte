@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import { getProjects, setProjects } from '$lib/utils';
 	import { projects } from '$lib/store';
+	import type { ProjectT } from '$lib/types';
 
 	let alertElement: HTMLDivElement;
 
@@ -34,21 +35,44 @@
 	});
 
 	function sync() {
-		const projects = getProjects();
+		if (navigator.onLine) {
+			const projects = getProjects();
 
-		fetch('/api/sync', {
-			method: 'POST',
-			body: JSON.stringify(projects)
-		});
+			fetch('/api/sync', {
+				method: 'POST',
+				body: JSON.stringify(projects)
+			});
+		}
 	}
 
 	onMount(async () => {
 		$projects = getProjects();
 
-		const res = await fetch('/api/sync');
-		const data = await res.json();
+		if ($page.data.session && navigator.onLine) {
+			const res = await fetch('/api/sync');
+			const data = (await res.json()) as { projects: ProjectT[]; lastUpdated: string | null };
 
-		setProjects(data, true);
+			if (localStorage.getItem('lastUpdated')) {
+				console.log('last updated found');
+				if (!data.lastUpdated) {
+					sync();
+					return;
+				}
+
+				const lastUpdated = new Date(localStorage.getItem('lastUpdated')!);
+				const serverLastUpdated = new Date(data.lastUpdated);
+
+				if (serverLastUpdated > lastUpdated) {
+					setProjects(data.projects, true);
+				} else {
+					sync();
+				}
+			} else {
+				console.log('no last updated');
+				console.log(data.projects);
+				setProjects(data.projects, true);
+			}
+		}
 
 		// setInterval(() => {
 		// 	const projects = getProjects();

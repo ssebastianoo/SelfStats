@@ -68,6 +68,7 @@ export function setProjects(projects: ProjectT[], updateGlobalValue = false) {
 	localStorage.setItem('projects', JSON.stringify(projects));
 	localStorage.setItem('lastUpdated', new Date().toISOString());
 	if (updateGlobalValue) prj.set(projects);
+	sync(projects);
 }
 
 export function updateProject(project: ProjectT) {
@@ -80,4 +81,17 @@ export function updateProject(project: ProjectT) {
 			return p;
 		})
 	);
+}
+
+export function sync(projects?: ProjectT[]) {
+	if (navigator.onLine) {
+		if (!projects) {
+			projects = getProjects();
+		}
+
+		fetch('/api/sync', {
+			method: 'POST',
+			body: JSON.stringify(projects)
+		});
+	}
 }

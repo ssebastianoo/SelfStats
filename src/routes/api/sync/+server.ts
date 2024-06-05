@@ -12,11 +12,12 @@ export const GET: RequestHandler = async ({ locals }) => {
 	let data: string;
 
 	try {
-		data = await fs.readFile('./src/user-data/' + session.user.id + '.jsons', {
+		data = await fs.readFile('./src/user-data/' + session.user.email + '.json', {
 			encoding: 'utf8'
 		});
 	} catch {
-		return json([]);
+		console.log('No data found for user', session.user.email);
+		return json({ projects: [] });
 	}
 
 	return json(JSON.parse(data));
@@ -32,7 +33,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 	const data = await request.json();
 
 	await fs.writeFile(
-		'./src/user-data/' + session.user.id + '.json',
+		'./src/user-data/' + session.user.email + '.json',
 		JSON.stringify({
 			projects: data,
 			lastUpdated: Date.now()

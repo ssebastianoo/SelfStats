@@ -1,12 +1,11 @@
 import { SvelteKitAuth } from '@auth/sveltekit';
-import GitHub from '@auth/sveltekit/providers/github';
+import Google from '@auth/sveltekit/providers/google';
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
-	providers: [GitHub],
+	providers: [Google],
 	callbacks: {
 		jwt({ token, user }) {
 			if (user) {
-				// User is available during sign-in
 				token.id = user.id;
 			}
 			return token;
