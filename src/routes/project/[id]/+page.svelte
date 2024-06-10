@@ -4,8 +4,8 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Button } from '$lib/components/ui/button';
 	import { Label } from '$lib/components/ui/label';
-	import type { DescriptorT, ProjectT } from '$lib/types';
-	import { project } from '$lib/store';
+	import type { DescriptorT } from '$lib/types';
+	import { project, projects } from '$lib/store';
 	import { goto } from '$app/navigation';
 	import { alert } from '$lib/store';
 	import { onMount } from 'svelte';
@@ -19,9 +19,8 @@
 	let projectNotFound = false;
 
 	onMount(() => {
-		let projects = getProjects();
-		if (projects.length > 0) {
-			const _project = projects.find((p) => p.id === data.project_id);
+		if ($projects.length > 0) {
+			const _project = $projects.find((p) => p.id === data.project_id);
 			if (_project) {
 				$project = _project;
 				loaded = true;

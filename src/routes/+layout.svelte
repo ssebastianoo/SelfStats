@@ -5,8 +5,16 @@
 	import '@fontsource-variable/inter';
 	import './app.css';
 	import { alert } from '$lib/store';
+	import { signIn, signOut } from '@auth/sveltekit/client';
+	import { Button } from '$lib/components/ui/button';
+	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import { getProjects, setProjects } from '$lib/utils';
+	import { projects } from '$lib/store';
+	import type { ProjectT } from '$lib/types';
 
 	let alertElement: HTMLDivElement;
+	let loaded = false;
 
 	alert.subscribe((value) => {
 		if (value.show) {
@@ -25,6 +33,60 @@
 				});
 			}, 2000);
 		}
+	});
+
+	function sync() {
+		if (navigator.onLine) {
+			const projects = getProjects();
+
+			fetch('/api/sync', {
+				method: 'POST',
+				body: JSON.stringify(projects)
+			});
+		}
+	}
+
+	onMount(async () => {
+		$projects = getProjects();
+
+		if ($page.data.session && navigator.onLine) {
+			const res = await fetch('/api/sync');
+			const data = (await res.json()) as { projects: ProjectT[]; lastUpdated: string | null };
+
+			if (localStorage.getItem('lastUpdated')) {
+				console.log('last updated found');
+				if (!data.lastUpdated) {
+					sync();
+					return;
+				}
+
+				const lastUpdated = new Date(localStorage.getItem('lastUpdated')!);
+				const serverLastUpdated = new Date(data.lastUpdated);
+
+				if (!localStorage.getItem('firstSync')) {
+					localStorage.setItem('firstSync', 'true');
+
+					for (const project of data.projects) {
+						const check = $projects.find((p) => p.id === project.id);
+						if (!check) {
+							$projects = [...$projects, project];
+						}
+					}
+					setProjects($projects);
+					loaded = true;
+					return;
+				}
+
+				if (serverLastUpdated > lastUpdated) {
+					setProjects(data.projects, true);
+				} else {
+					sync();
+				}
+			} else {
+				setProjects(data.projects, true);
+			}
+		}
+		loaded = true;
 	});
 </script>
 
@@ -49,10 +111,30 @@
 	<div class="max-w-[800px] w-full">
 		<header class="flex justify-between mb-4 items-center">
 			<a href="/"><Home size="30" /></a>
+			{#if $page.data.session}
+				<Button
+					variant="outline"
+					size="sm"
+					on:click={() => {
+						localStorage.removeItem('firstSync');
+						signOut();
+					}}>Logout</Button
+				>
+			{:else}
+				<Button
+					variant="outline"
+					size="sm"
+					on:click={() => {
+						signIn();
+					}}>Login</Button
+				>
+			{/if}
 			<a href="/data"><FileArchive size="30" /></a>
 		</header>
 		<div>
-			<slot />
+			{#if loaded}
+				<slot />
+			{/if}
 		</div>
 	</div>
 </main>
