@@ -14,5 +14,6 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 			session.user.id = token.id as string;
 			return session;
 		}
-	}
+	},
+	trustHost: true
 });
