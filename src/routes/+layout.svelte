@@ -14,6 +14,7 @@
 	import type { ProjectT } from '$lib/types';
 
 	let alertElement: HTMLDivElement;
+	let loaded = false;
 
 	alert.subscribe((value) => {
 		if (value.show) {
@@ -62,27 +63,30 @@
 				const lastUpdated = new Date(localStorage.getItem('lastUpdated')!);
 				const serverLastUpdated = new Date(data.lastUpdated);
 
+				if (!localStorage.getItem('firstSync')) {
+					localStorage.setItem('firstSync', 'true');
+
+					for (const project of data.projects) {
+						const check = $projects.find((p) => p.id === project.id);
+						if (!check) {
+							$projects = [...$projects, project];
+						}
+					}
+					setProjects($projects);
+					loaded = true;
+					return;
+				}
+
 				if (serverLastUpdated > lastUpdated) {
 					setProjects(data.projects, true);
 				} else {
 					sync();
 				}
 			} else {
-				console.log('no last updated');
-				console.log(data.projects);
 				setProjects(data.projects, true);
 			}
 		}
-
-		// setInterval(() => {
-		// 	const projects = getProjects();
-		// 	console.log('aaa');
-
-		// 	fetch('/api/sync', {
-		// 		method: 'POST',
-		// 		body: JSON.stringify(projects)
-		// 	});
-		// }, 10000);
+		loaded = true;
 	});
 </script>
 
@@ -112,6 +116,7 @@
 					variant="outline"
 					size="sm"
 					on:click={() => {
+						localStorage.removeItem('firstSync');
 						signOut();
 					}}>Logout</Button
 				>
@@ -127,7 +132,9 @@
 			<a href="/data"><FileArchive size="30" /></a>
 		</header>
 		<div>
-			<slot />
+			{#if loaded}
+				<slot />
+			{/if}
 		</div>
 	</div>
 </main>
