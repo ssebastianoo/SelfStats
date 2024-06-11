@@ -44,7 +44,6 @@
     "@internationalized/date": "^3.5.4",
     "@supabase/supabase-js": "^2.42.5",
     "@types/jsonwebtoken": "^9.0.6",
-    "@vercel/analytics": "^1.2.2",
     "bits-ui": "^0.21.9",
     "chart.js": "^4.4.3",
     "clsx": "^2.1.1",
