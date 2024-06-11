@@ -54,9 +54,9 @@
 			const data = (await res.json()) as { projects: ProjectT[]; lastUpdated: string | null };
 
 			if (localStorage.getItem('lastUpdated')) {
-				console.log('last updated found');
 				if (!data.lastUpdated) {
 					sync();
+					loaded = true;
 					return;
 				}
 
