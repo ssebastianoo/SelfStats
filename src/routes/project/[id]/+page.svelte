@@ -44,16 +44,14 @@
 		$project.name = name;
 		$project.description = description;
 
-		let projects = getProjects();
-
-		projects = projects.map((p) => {
+		$projects = $projects.map((p) => {
 			if (p.id === $project.id) {
 				return $project;
 			}
 			return p;
 		});
 
-		setProjects(projects);
+		setProjects($projects);
 
 		$alert = {
 			title: 'Success',
@@ -130,8 +128,10 @@
 	}
 
 	async function deleteProject() {
-		const projects = getProjects();
-		setProjects(projects.filter((p) => p.id !== $project.id));
+		setProjects(
+			$projects.filter((p) => p.id !== $project.id),
+			true
+		);
 		$alert = {
 			title: 'Success',
 			description: 'Project deleted',

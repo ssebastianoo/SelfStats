@@ -79,7 +79,8 @@ export function updateProject(project: ProjectT) {
 				return project;
 			}
 			return p;
-		})
+		}),
+		true
 	);
 }
 
