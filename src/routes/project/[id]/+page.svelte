@@ -9,7 +9,7 @@
 	import { goto } from '$app/navigation';
 	import { alert } from '$lib/store';
 	import { onMount } from 'svelte';
-	import { getProjects, setProjects, updateProject } from '$lib/utils';
+	import { setProjects, updateProject } from '$lib/utils';
 
 	export let data;
 

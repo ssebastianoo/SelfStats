@@ -6,6 +6,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { project } from '$lib/store';
 	import Charts from './Charts.svelte';
+	import CSV from '$lib/components/CSV.svelte';
 
 	const dispatch = createEventDispatcher();
 </script>
@@ -21,6 +22,7 @@
 				dispatch('edit');
 			}}><Pencil size="18" /></Button
 		>
+		<CSV />
 	</div>
 	{#if $project.description}
 		<p class="mt-2">{$project.description}</p>
