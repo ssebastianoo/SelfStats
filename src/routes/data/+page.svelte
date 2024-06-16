@@ -73,7 +73,7 @@
 
 <div
 	class="flex items-center justify-center gap-2 flex-col"
-	style={`height: calc(var(--fh) - 30px - 4.5rem)`}
+	style={`height: calc(var(--fh) - 36px - 4.5rem)`}
 >
 	<Button class="w-32" size="sm" variant="outline" on:click={load}>Load</Button>
 	<Button class="w-32" size="sm" variant="outline" on:click={backup}>Backup</Button>

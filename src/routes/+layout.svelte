@@ -49,6 +49,8 @@
 	onMount(async () => {
 		$projects = getProjects();
 
+		console.log($page.data.session);
+
 		if ($page.data.session && navigator.onLine) {
 			const res = await fetch('/api/sync');
 			const data = (await res.json()) as { projects: ProjectT[]; lastUpdated: string | null };
