@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { alert } from '$lib/store';
+	import { projects, alert } from '$lib/store';
+	import { setProjects } from '$lib/utils';
 
 	function backup() {
 		if (!localStorage.getItem('projects')) {
@@ -61,7 +62,8 @@
 	}
 
 	function reset() {
-		localStorage.removeItem('projects');
+		setProjects([], true);
+
 		$alert = {
 			show: true,
 			danger: false,
