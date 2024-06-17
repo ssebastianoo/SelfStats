@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { projects, alert } from '$lib/store';
+	import { alert } from '$lib/store';
 	import { setProjects } from '$lib/utils';
 
 	function backup() {

@@ -1,6 +1,16 @@
 <script lang="ts">
 	import { SignIn } from '@auth/sveltekit/components';
 	import { buttonVariants } from '$lib/components/ui/button';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+
+	onMount(() => {
+		console.log($page.data.session);
+		if ($page.data.session) {
+			goto('/');
+		}
+	});
 </script>
 
 <div
@@ -10,7 +20,7 @@
 	<SignIn provider="google" signInPage="signin">
 		<div
 			slot="submitButton"
-			class={'flex items-center gap-3 ' + buttonVariants({ size: 'sm', variant: 'outline' })}
+			class={'flex items-center gap-3 w-48 ' + buttonVariants({ size: 'sm' })}
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" width="24"
 				><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
@@ -23,7 +33,7 @@
 	<SignIn provider="github" signInPage="signin">
 		<div
 			slot="submitButton"
-			class={'flex items-center gap-3 ' + buttonVariants({ size: 'sm', variant: 'outline' })}
+			class={'flex items-center gap-3 w-48 ' + buttonVariants({ size: 'sm' })}
 		>
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" width="24"
 				><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
@@ -33,4 +43,9 @@
 			<span> Signin with GitHub </span>
 		</div>
 	</SignIn>
+	<p class="w-48 mt-4">
+		Loggin in will turn on synchronization, this means that your data will be also stored in our
+		server. <span class="font-bold">Please note that it's not encrypted yet</span>, we're working on
+		it.
+	</p>
 </div>
