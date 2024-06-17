@@ -5,8 +5,10 @@
 	import { Plus } from 'lucide-svelte';
 	import Input from './ui/input/input.svelte';
 	import { project } from '$lib/store';
-	import { getProjects, setProjects, updateProject } from '$lib/utils';
+	import { updateProject } from '$lib/utils';
 	import type { DataT, ValueT } from '$lib/types';
+
+	let open = false;
 
 	async function addSimpleValue(e: Event) {
 		const newData: DataT = {
@@ -49,14 +51,20 @@
 		};
 
 		$project.data = [data, ...$project.data];
+
+		open = false;
+
 		updateProject($project);
 	}
 </script>
 
 {#if $project.descriptors.length > 0}
-	<Dialog.Root>
-		<Dialog.Trigger class={buttonVariants({ variant: 'outline', size: 'sm' })}
-			><Plus /></Dialog.Trigger
+	<Dialog.Root {open}>
+		<Dialog.Trigger
+			class={buttonVariants({ variant: 'outline', size: 'sm' })}
+			on:click={() => {
+				open = true;
+			}}><Plus /></Dialog.Trigger
 		>
 		<Dialog.Content>
 			<Dialog.Header>
@@ -76,9 +84,9 @@
 						required
 					/>
 				{/each}
-				<DialogPrimitive.Close>
+				<div class="flex justify-center">
 					<Button variant="outline" size="sm" type="submit">Add value</Button>
-				</DialogPrimitive.Close>
+				</div>
 			</form>
 		</Dialog.Content>
 	</Dialog.Root>
