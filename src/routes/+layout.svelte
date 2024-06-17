@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Toaster } from '$lib/components/ui/sonner';
 	import * as Alert from '$lib/components/ui/alert';
-	import { Home, FileArchive } from 'lucide-svelte';
+	import { Home, FileArchive, Menu, LogIn, LogOut, Code } from 'lucide-svelte';
 	import '@fontsource-variable/inter';
 	import './app.css';
 	import { alert } from '$lib/store';
@@ -12,6 +12,7 @@
 	import { getProjects, setProjects } from '$lib/utils';
 	import { projects } from '$lib/store';
 	import type { ProjectT } from '$lib/types';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
 	let alertElement: HTMLDivElement;
 	let loaded = false;
@@ -111,25 +112,48 @@
 	<div class="max-w-[800px] w-full">
 		<header class="flex justify-between mb-4 items-center">
 			<a href="/"><Home size="30" /></a>
-			{#if $page.data.session}
-				<Button
-					variant="outline"
-					size="sm"
-					on:click={() => {
-						localStorage.removeItem('firstSync');
-						signOut();
-					}}>Logout</Button
-				>
-			{:else}
-				<Button
-					variant="outline"
-					size="sm"
-					on:click={() => {
-						signIn();
-					}}>Login</Button
-				>
-			{/if}
-			<a href="/data"><FileArchive size="30" /></a>
+
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger>
+					<Button variant="outline" size="sm"><Menu /></Button>
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content>
+					<DropdownMenu.Group>
+						{#if $page.data.session}
+							<DropdownMenu.Item
+								class="cursor-pointer"
+								on:click={() => {
+									localStorage.removeItem('firstSync');
+									signOut();
+								}}
+								><LogOut class="mr-2 h-4 w-4" />
+								<span>Logout</span></DropdownMenu.Item
+							>
+						{:else}
+							<DropdownMenu.Item
+								class="cursor-pointer"
+								on:click={() => {
+									signIn();
+								}}
+							>
+								<LogIn class="mr-2 h-4 w-4" />
+								<span>Login</span>
+							</DropdownMenu.Item>
+						{/if}
+						<DropdownMenu.Item href="/data" class="cursor-pointer"
+							><FileArchive class="mr-2 h-4 w-4" />
+							<span>Manage data</span></DropdownMenu.Item
+						>
+						<DropdownMenu.Item
+							target="_blank"
+							href="https://github.com/ssebastianoo/SelfStats"
+							class="cursor-pointer"
+							><Code class="mr-2 h-4 w-4" />
+							<span>GitHub</span></DropdownMenu.Item
+						>
+					</DropdownMenu.Group>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
 		</header>
 		<div>
 			{#if loaded}
