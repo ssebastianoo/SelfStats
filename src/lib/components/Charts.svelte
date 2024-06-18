@@ -130,7 +130,7 @@
 	{:else}
 		<div class="flex flex-col gap-3">
 			{#each chartLineData as data}
-				<Line {data} height="100" />
+				<Line {data} height="200" />
 			{/each}
 		</div>
 	{/if}

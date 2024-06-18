@@ -7,8 +7,11 @@
 	import { project } from '$lib/store';
 	import Charts from './Charts.svelte';
 	import CSV from '$lib/components/CSV.svelte';
+	import { Switch } from '$lib/components/ui/switch/index.js';
 
 	const dispatch = createEventDispatcher();
+
+	let showGraphs = false;
 </script>
 
 <div>
@@ -34,7 +37,13 @@
 		<Register />
 	</div>
 	{#key $project.data}
-		<Charts />
+		<div class="flex items-center gap-2 mb-4">
+			<Switch bind:checked={showGraphs} class="mr-2" />
+			<p>Show graphs</p>
+		</div>
+		{#if showGraphs}
+			<Charts />
+		{/if}
 	{/key}
 	<Values />
 </div>

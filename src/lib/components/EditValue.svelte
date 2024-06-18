@@ -23,7 +23,6 @@
 		const newDate = target.date.value + ' ' + target.hours.value + ':' + target.minutes.value;
 
 		if (newDate !== target.original_date.value) {
-			console.log(newDate);
 			date = new Date(newDate);
 			if (!date.getDay() && date.getDay() !== 0) {
 				$alert = {

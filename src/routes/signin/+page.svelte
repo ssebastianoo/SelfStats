@@ -6,7 +6,6 @@
 	import { page } from '$app/stores';
 
 	onMount(() => {
-		console.log($page.data.session);
 		if ($page.data.session) {
 			goto('/');
 		}
@@ -44,7 +43,7 @@
 		</div>
 	</SignIn>
 	<p class="w-48 mt-4">
-		Loggin in will turn on synchronization, this means that your data will be also stored in our
+		Logging in will turn on synchronization, this means that your data will be also stored in our
 		server. <span class="font-bold">Please note that it's not encrypted yet</span>, we're working on
 		it.
 	</p>

@@ -119,7 +119,10 @@
 				</DropdownMenu.Trigger>
 				<DropdownMenu.Content>
 					<DropdownMenu.Group>
-						{#if $page.data.session}
+						{#if $page.data.session?.user}
+							<DropdownMenu.Label>{$page.data.session.user.email?.split('@')[0]}</DropdownMenu.Label
+							>
+							<DropdownMenu.Separator />
 							<DropdownMenu.Item
 								class="cursor-pointer"
 								on:click={() => {
