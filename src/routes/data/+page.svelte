@@ -47,7 +47,7 @@
 			const reader = new FileReader();
 			reader.onload = (e) => {
 				const projects = JSON.parse(e.target!.result as string);
-				localStorage.setItem('projects', JSON.stringify(projects));
+				setProjects(projects, true);
 				$alert = {
 					show: true,
 					danger: false,

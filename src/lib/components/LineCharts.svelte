@@ -68,6 +68,8 @@
 					return d.created_at.split('T')[0] === formatted;
 				});
 
+				console.log(data);
+
 				if (data.length === 0) {
 					for (const dataset of chartLineData.datasets) {
 						dataset.data.push(0);
