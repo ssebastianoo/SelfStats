@@ -76,16 +76,18 @@
 </script>
 
 {#if loaded}
-	<select
-		bind:value={show}
-		class="rounded-md border border-input bg-background px-3 py-2 text-sm
+	{#if $project.descriptors.some((descriptor) => descriptor.type === 'number')}
+		<select
+			bind:value={show}
+			class="rounded-md border border-input bg-background px-3 py-2 text-sm
 			ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium
 			placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2
 			focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 mb-3"
-	>
-		<option value="bar">Dates</option>
-		<option value="line">Values</option>
-	</select>
+		>
+			<option value="bar">Dates</option>
+			<option value="line">Values</option>
+		</select>
+	{/if}
 	{#if show === 'bar'}
 		<div>
 			<Bar data={chartData} options={{ maintainAspectRatio: false }} height={250} />
