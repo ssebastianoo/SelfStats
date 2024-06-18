@@ -4,6 +4,9 @@ Make personal statistics easy to track and manage with this fast PWA
 
 ![image](https://github.com/ssebastianoo/SelfStats/assets/48064277/8263e21d-5470-495a-bdbf-41d6b3c43aae)
 
+### Visualize your data
+![image](https://github.com/ssebastianoo/SelfStats/assets/48064277/017505e5-8884-4236-9625-2a2530d54ebd)
+
 ### Make your options
 Create personal descriptors to analyze data your way
 
