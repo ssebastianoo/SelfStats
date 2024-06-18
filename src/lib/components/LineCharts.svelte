@@ -120,5 +120,7 @@
 </script>
 
 {#if loaded}
-	<Line data={chartLineData} height="120" />
+	<div>
+		<Line data={chartLineData} options={{ maintainAspectRatio: false }} height={250} />
+	</div>
 {/if}

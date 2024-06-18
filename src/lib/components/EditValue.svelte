@@ -5,12 +5,9 @@
 	import Label from './ui/label/label.svelte';
 	import type { DataT, DescriptorT, ValueT } from '$lib/types';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import { createEventDispatcher } from 'svelte';
 	import { project } from '$lib/store';
 	import { alert } from '$lib/store';
 	import { updateProject } from '$lib/utils';
-
-	const dispatch = createEventDispatcher();
 
 	export let data: DataT;
 	export let descriptors: DescriptorT[];

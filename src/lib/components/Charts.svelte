@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Bar, Line } from 'svelte-chartjs';
+	import { Bar } from 'svelte-chartjs';
 	import {
 		Chart,
 		BarElement,
@@ -13,7 +13,7 @@
 	} from 'chart.js';
 	import { onMount } from 'svelte';
 	import { project } from '$lib/store';
-	import type { ChartData, Point } from 'chart.js';
+	import type { ChartData } from 'chart.js';
 	import LineCharts from './LineCharts.svelte';
 
 	let loaded = false;
@@ -31,15 +31,11 @@
 		]
 	};
 
-	let chartLineData: ChartData<'line', (number | Point)[], unknown>[] = [];
-
 	onMount(() => {
 		let values: {
 			date: string;
 			value: number;
 		}[] = [];
-
-		let numberValues: { id: number; dates: string[]; values: number[]; name: string }[] = [];
 
 		$project.data.sort(
 			(a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
@@ -57,46 +53,10 @@
 					value: 1
 				});
 			}
-			for (const value of data.values) {
-				if (value.type === 'number') {
-					const descriptor = $project.descriptors.find((d) => d.id === value.descriptor_id);
-					if (descriptor) {
-						const numberValue = numberValues.find((x) => x.id === descriptor.id);
-						if (numberValue) {
-							numberValue.dates.push(date.toLocaleDateString());
-							numberValue.values.push(parseInt(value.value));
-						} else {
-							numberValues.push({
-								id: descriptor.id,
-								dates: [date.toLocaleDateString()],
-								values: [parseInt(value.value)],
-								name: descriptor.name
-							});
-						}
-					}
-				}
-			}
 		}
 
 		chartData.labels = values.map((v) => v.date);
 		chartData.datasets[0].data = values.map((v) => v.value);
-
-		chartLineData = numberValues.map((value) => {
-			return {
-				labels: value.dates,
-				datasets: [
-					{
-						label: value.name,
-						backgroundColor: 'rgba(255, 255, 255,0.4)',
-						borderWidth: 2,
-						borderColor: 'white',
-						data: value.values.map((v) => v),
-						// @ts-ignore
-						lineTension: 0.3
-					}
-				]
-			};
-		});
 
 		Chart.register(
 			Tooltip,
@@ -127,7 +87,9 @@
 		<option value="line">Values</option>
 	</select>
 	{#if show === 'bar'}
-		<Bar data={chartData} options={{ responsive: true }} height="90" />
+		<div>
+			<Bar data={chartData} options={{ maintainAspectRatio: false }} height={250} />
+		</div>
 	{:else}
 		<LineCharts />
 	{/if}
