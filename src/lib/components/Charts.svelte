@@ -14,6 +14,7 @@
 	import { onMount } from 'svelte';
 	import { project } from '$lib/store';
 	import type { ChartData, Point } from 'chart.js';
+	import LineCharts from './LineCharts.svelte';
 
 	let loaded = false;
 	let show: 'bar' | 'line' = 'bar';
@@ -128,10 +129,6 @@
 	{#if show === 'bar'}
 		<Bar data={chartData} options={{ responsive: true }} height="90" />
 	{:else}
-		<div class="flex flex-col gap-3">
-			{#each chartLineData as data}
-				<Line {data} height="200" />
-			{/each}
-		</div>
+		<LineCharts />
 	{/if}
 {/if}
