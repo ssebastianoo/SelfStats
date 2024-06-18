@@ -48,7 +48,6 @@
 		const numberValues = $project.data.find((data) => {
 			return data.values.some((value) => value.type === 'number');
 		});
-		console.log(numberValues);
 
 		if (numberValues) {
 			let done = false;
@@ -57,18 +56,25 @@
 			while (done === false) {
 				let date = new Date(numberValues.created_at);
 				date.setDate(date.getDate() + count);
-
-				console.log(date);
+				date.setHours(13);
+				date.setMinutes(0);
+				date.setSeconds(0);
 
 				chartLineData.labels!.push(date.toLocaleDateString());
 
-				const formatted = date.toISOString().split('T')[0];
-
 				const data = $project.data.filter((d) => {
-					return d.created_at.split('T')[0] === formatted;
-				});
+					const then = new Date(d.created_at);
 
-				console.log(data);
+					if (
+						then.getDate() === date.getDate() &&
+						then.getMonth() === date.getMonth() &&
+						then.getFullYear() === date.getFullYear()
+					) {
+						return true;
+					}
+
+					return false;
+				});
 
 				if (data.length === 0) {
 					for (const dataset of chartLineData.datasets) {
