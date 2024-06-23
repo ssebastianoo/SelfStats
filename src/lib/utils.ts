@@ -4,6 +4,8 @@ import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 import type { ProjectT } from '$lib/types';
 import { projects as prj } from '$lib/store';
+import { page } from '$app/stores';
+import { get } from 'svelte/store';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -85,7 +87,7 @@ export function updateProject(project: ProjectT) {
 }
 
 export async function sync(projects?: ProjectT[]) {
-	if (navigator.onLine) {
+	if (navigator.onLine && get(page).data.session) {
 		if (!projects) {
 			projects = getProjects();
 		}

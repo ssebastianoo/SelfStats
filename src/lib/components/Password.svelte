@@ -3,12 +3,9 @@
 	import Input from './ui/input/input.svelte';
 	import { decode, sync } from '$lib/utils';
 	import { alert } from '$lib/store';
-	import type { ProjectT } from '$lib/types';
 
 	export let firstTime: boolean;
 	export let error: boolean;
-
-	let open = true;
 
 	async function checkPassword(e: Event) {
 		const target = e.target as HTMLFormElement;
@@ -24,7 +21,6 @@
 					title: 'Success',
 					description: 'Your data has been successfully synced'
 				};
-				open = false;
 			} else {
 				if (status.code === 'network') {
 					$alert = {
@@ -35,16 +31,15 @@
 					};
 				}
 			}
+			location.reload();
 			return;
 		}
 
 		const res = await fetch('/api/sync');
 		const text = await res.text();
 
-		let decoded: { projects: ProjectT[]; lastUpdated: string };
-
 		try {
-			decoded = await decode(password, text);
+			const decoded = await decode(password, text);
 		} catch {
 			$alert = {
 				show: true,
