@@ -9,13 +9,19 @@
 	import { Button } from '$lib/components/ui/button';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { getProjects, setProjects } from '$lib/utils';
+	import { getProjects, setProjects, sync, decode } from '$lib/utils';
 	import { projects } from '$lib/store';
 	import type { ProjectT } from '$lib/types';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import Password from '$lib/components/Password.svelte';
 
 	let alertElement: HTMLDivElement;
 	let loaded = false;
+	let setPassword = {
+		show: false,
+		new: false,
+		error: false
+	};
 
 	alert.subscribe((value) => {
 		if (value.show) {
@@ -36,31 +42,51 @@
 		}
 	});
 
-	function sync() {
-		if (navigator.onLine) {
-			const projects = getProjects();
-
-			fetch('/api/sync', {
-				method: 'POST',
-				body: JSON.stringify(projects)
-			});
-		}
-	}
-
 	onMount(async () => {
 		$projects = getProjects();
 
 		if ($page.data.session && navigator.onLine) {
 			const res = await fetch('/api/sync');
-			const data = (await res.json()) as { projects: ProjectT[]; lastUpdated: string | null };
+
+			if (res.status === 404) {
+				setPassword = {
+					show: true,
+					new: true,
+					error: false
+				};
+				loaded = true;
+				return;
+			} else if (!res.ok) {
+				return;
+			}
+
+			const password = localStorage.getItem('password')!;
+			if (!password) {
+				setPassword = {
+					show: true,
+					new: false,
+					error: false
+				};
+				loaded = true;
+				return;
+			}
+
+			const raw = await res.text();
+			let data: { projects: ProjectT[]; lastUpdated: string };
+
+			try {
+				data = await decode(password, raw);
+			} catch (e) {
+				setPassword = {
+					show: true,
+					new: false,
+					error: true
+				};
+				loaded = true;
+				return;
+			}
 
 			if (localStorage.getItem('lastUpdated')) {
-				if (!data.lastUpdated) {
-					sync();
-					loaded = true;
-					return;
-				}
-
 				const lastUpdated = new Date(localStorage.getItem('lastUpdated')!);
 				const serverLastUpdated = new Date(data.lastUpdated);
 
@@ -160,7 +186,11 @@
 		</header>
 		<div>
 			{#if loaded}
-				<slot />
+				{#if setPassword.show}
+					<Password firstTime={setPassword.new} error={setPassword.error} />
+				{:else}
+					<slot />
+				{/if}
 			{/if}
 		</div>
 	</div>

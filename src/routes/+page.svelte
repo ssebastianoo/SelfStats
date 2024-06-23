@@ -6,10 +6,8 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import type { ProjectT } from '$lib/types';
 	import { alert } from '$lib/store';
-	import { getProjects, setProjects } from '$lib/utils';
-	import { onMount } from 'svelte';
+	import { setProjects } from '$lib/utils';
 	import { projects } from '$lib/store';
-[]
 	let dialogOpen = false;
 
 	async function createProject(e: Event) {

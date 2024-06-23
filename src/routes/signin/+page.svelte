@@ -42,9 +42,8 @@
 			<span> Signin with GitHub </span>
 		</div>
 	</SignIn>
-	<p class="w-48 mt-4">
-		Logging in will turn on synchronization, this means that your data will be also stored in our
-		server. <span class="font-bold">Please note that it's not encrypted yet</span>, we're working on
-		it.
+	<p class="w-48 mt-4 text-muted-foreground italic text-sm">
+		Logging in will turn on synchronization, your data will be encrypted and stored in our server.
+		We'll be only able to see your email.
 	</p>
 </div>

@@ -84,15 +84,122 @@ export function updateProject(project: ProjectT) {
 	);
 }
 
-export function sync(projects?: ProjectT[]) {
+export async function sync(projects?: ProjectT[]) {
 	if (navigator.onLine) {
 		if (!projects) {
 			projects = getProjects();
 		}
 
-		fetch('/api/sync', {
+		const masterPassword = localStorage.getItem('password')!;
+
+		let encoded: string;
+
+		try {
+			encoded = await encode(masterPassword, { projects, lastUpdated: new Date().toISOString() });
+		} catch {
+			return { success: false, code: 'password' };
+		}
+
+		const res = await fetch('/api/sync', {
 			method: 'POST',
-			body: JSON.stringify(projects)
+			body: encoded
 		});
+		return { success: res.ok, code: 'network' };
 	}
+	return { success: false, code: 'offline' };
+}
+
+export async function encode(
+	masterPassword: string,
+	jsonObject: { projects: ProjectT[]; lastUpdated: string }
+): Promise<string> {
+	const passwordKey = await crypto.subtle.importKey(
+		'raw',
+		new TextEncoder().encode(masterPassword),
+		{ name: 'PBKDF2' },
+		false,
+		['deriveKey']
+	);
+
+	const salt = crypto.getRandomValues(new Uint8Array(16));
+	const derivedKey = await crypto.subtle.deriveKey(
+		{
+			name: 'PBKDF2',
+			salt: salt,
+			iterations: 100000,
+			hash: 'SHA-256'
+		},
+		passwordKey,
+		{ name: 'AES-GCM', length: 256 },
+		true,
+		['encrypt', 'decrypt']
+	);
+
+	const text = JSON.stringify(jsonObject);
+
+	const iv = crypto.getRandomValues(new Uint8Array(12));
+	const encodedData = new TextEncoder().encode(text);
+	const encryptedData = await crypto.subtle.encrypt(
+		{
+			name: 'AES-GCM',
+			iv: iv
+		},
+		derivedKey,
+		encodedData
+	);
+
+	const combinedArray = new Uint8Array(salt.length + iv.length + encryptedData.byteLength);
+	combinedArray.set(salt);
+	combinedArray.set(iv, salt.length);
+	combinedArray.set(new Uint8Array(encryptedData), salt.length + iv.length);
+
+	const combinedArrayString = String.fromCharCode(...combinedArray);
+	return btoa(combinedArrayString);
+}
+
+export async function decode(
+	masterPassword: string,
+	base64String: string
+): Promise<{ projects: ProjectT[]; lastUpdated: string }> {
+	const combinedArray = new Uint8Array(
+		atob(base64String)
+			.split('')
+			.map((c) => c.charCodeAt(0))
+	);
+
+	const salt = combinedArray.slice(0, 16);
+	const iv = combinedArray.slice(16, 28);
+	const encryptedData = combinedArray.slice(28);
+
+	const passwordKey = await crypto.subtle.importKey(
+		'raw',
+		new TextEncoder().encode(masterPassword),
+		{ name: 'PBKDF2' },
+		false,
+		['deriveKey']
+	);
+
+	const derivedKey = await crypto.subtle.deriveKey(
+		{
+			name: 'PBKDF2',
+			salt: salt,
+			iterations: 100000,
+			hash: 'SHA-256'
+		},
+		passwordKey,
+		{ name: 'AES-GCM', length: 256 },
+		true,
+		['encrypt', 'decrypt']
+	);
+
+	const decryptedData = await crypto.subtle.decrypt(
+		{
+			name: 'AES-GCM',
+			iv: iv
+		},
+		derivedKey,
+		encryptedData
+	);
+
+	return JSON.parse(new TextDecoder().decode(decryptedData));
 }
