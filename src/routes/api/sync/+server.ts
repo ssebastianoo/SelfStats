@@ -1,24 +1,18 @@
 import type { RequestHandler } from './$types';
-import fs from 'fs/promises';
+import { db } from '$lib/server/db';
 
 export const GET: RequestHandler = async ({ locals }) => {
+	db.run('CREATE TABLE IF NOT EXISTS data (email TEXT PRIMARY KEY, data BLOB)');
 	const session = await locals.auth();
 
 	if (!session || !session.user) {
 		return new Response(null, { status: 401 });
 	}
 
-	let data: string;
+	const result = await db.get('SELECT data FROM data WHERE email = ?', session.user.email);
 
-	try {
-		data = await fs.readFile('./src/user-data/' + session.user.email + '.txt', {
-			encoding: 'utf8'
-		});
-	} catch {
-		return new Response(null, { status: 404 });
-	}
-
-	return new Response(data);
+	if (!result) return new Response(null, { status: 404 });
+	return new Response(result.data as string);
 };
 
 export const POST: RequestHandler = async ({ locals, request }) => {
@@ -30,6 +24,10 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 
 	const data = await request.text();
 
-	await fs.writeFile('./src/user-data/' + session.user.email + '.txt', data);
+	await db.run('INSERT OR REPLACE INTO data (email, data) VALUES (?, ?)', [
+		session.user.email,
+		data
+	]);
+
 	return new Response();
 };
