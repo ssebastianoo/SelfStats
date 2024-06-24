@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Bar } from 'svelte-chartjs';
+	import ValueCharts from './ValueCharts.svelte';
+	import { Line } from 'svelte-chartjs';
 	import {
 		Chart,
 		BarElement,
@@ -13,50 +14,75 @@
 	} from 'chart.js';
 	import { onMount } from 'svelte';
 	import { project } from '$lib/store';
-	import type { ChartData } from 'chart.js';
-	import LineCharts from './LineCharts.svelte';
+	import type { ChartData, Point } from 'chart.js';
 
-	let loaded = false;
-	let show: 'bar' | 'line' = 'bar';
-	let chartData: ChartData<'bar', (number | [number, number])[], unknown> = {
+	let chartLineData: ChartData<'line', (number | Point)[]> = {
 		labels: [],
 		datasets: [
 			{
 				label: 'Dates',
+				backgroundColor: 'white',
+				borderColor: 'white',
+				borderWidth: 3,
 				data: [],
-				backgroundColor: 'rgba(255, 255, 255,0.4)',
-				borderWidth: 2,
-				borderColor: 'white'
+				// @ts-ignore
+				lineTension: 0.3
 			}
 		]
 	};
 
+	let loaded = false;
+	let show: 'bar' | 'line' = 'bar';
+
 	onMount(() => {
-		let values: {
-			date: string;
-			value: number;
-		}[] = [];
+		if ($project.data.length > 0) {
+			let done = false;
+			let count = 0;
 
-		$project.data.sort(
-			(a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-		);
+			$project.data.sort((a, b) => {
+				return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+			});
 
-		for (const data of $project.data) {
-			const date = new Date(data.created_at);
+			while (done === false) {
+				let date = new Date($project.data[0].created_at);
+				date.setDate(date.getDate() + count);
+				date.setHours(13);
+				date.setMinutes(0);
+				date.setSeconds(0);
 
-			const value = values.find((v) => v.date === date.toLocaleDateString());
-			if (value) {
-				value.value++;
-			} else {
-				values.push({
-					date: date.toLocaleDateString(),
-					value: 1
+				chartLineData.labels!.push(date.toLocaleDateString());
+
+				const data = $project.data.filter((d) => {
+					const then = new Date(d.created_at);
+
+					if (
+						then.getDate() === date.getDate() &&
+						then.getMonth() === date.getMonth() &&
+						then.getFullYear() === date.getFullYear()
+					) {
+						return true;
+					}
+
+					return false;
 				});
+
+				if (data.length === 0) {
+					chartLineData.datasets[0].data.push(0);
+				} else {
+					let totalValue = 0;
+					for (const _ of data) {
+						totalValue += 1;
+					}
+					chartLineData.datasets[0].data.push(totalValue);
+				}
+
+				if (date.toLocaleDateString() === new Date().toLocaleDateString()) {
+					done = true;
+				}
+
+				count += 1;
 			}
 		}
-
-		chartData.labels = values.map((v) => v.date);
-		chartData.datasets[0].data = values.map((v) => v.value);
 
 		Chart.register(
 			Tooltip,
@@ -90,9 +116,9 @@
 	{/if}
 	{#if show === 'bar'}
 		<div>
-			<Bar data={chartData} options={{ maintainAspectRatio: false }} height={250} />
+			<Line data={chartLineData} options={{ maintainAspectRatio: false }} height={250} />
 		</div>
 	{:else}
-		<LineCharts />
+		<ValueCharts />
 	{/if}
 {/if}
