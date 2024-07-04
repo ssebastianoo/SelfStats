@@ -15,4 +15,4 @@ Create personal descriptors to analyze data your way
 ### Data is yours!
 By default the data you collect stays on your device!
 
-_You can turn on synchronization by signin in with GitHub or Google but IT'S NOT ENCRYPTED YET_
+_You can turn on synchronization by signin in with GitHub or Google. You will be asked to prompt a master password that will be used to encrypt your data on the server._
