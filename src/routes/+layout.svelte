@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Toaster } from '$lib/components/ui/sonner';
 	import * as Alert from '$lib/components/ui/alert';
-	import { Home, FileArchive, Menu, LogIn, LogOut, Code } from 'lucide-svelte';
+	import { Home, FileArchive, Menu, LogIn, LogOut, Code, KeyRound } from 'lucide-svelte';
 	import '@fontsource-variable/inter';
 	import './app.css';
 	import { alert } from '$lib/store';
@@ -153,6 +153,7 @@
 								class="cursor-pointer"
 								on:click={() => {
 									localStorage.removeItem('firstSync');
+									localStorage.removeItem('password');
 									signOut();
 								}}
 								><LogOut class="mr-2 h-4 w-4" />
@@ -173,6 +174,12 @@
 							><FileArchive class="mr-2 h-4 w-4" />
 							<span>Manage data</span></DropdownMenu.Item
 						>
+						{#if $page.data.session}
+							<DropdownMenu.Item href="/change-password" class="cursor-pointer"
+								><KeyRound class="mr-2 h-4 w-4" />
+								<span>Change password</span></DropdownMenu.Item
+							>
+						{/if}
 						<DropdownMenu.Item
 							target="_blank"
 							href="https://github.com/ssebastianoo/SelfStats"
