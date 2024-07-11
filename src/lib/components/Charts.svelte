@@ -35,6 +35,10 @@
 	let show: 'bar' | 'line' = 'bar';
 
 	onMount(() => {
+		if (localStorage.getItem('graphType')) {
+			show = localStorage.getItem('graphType') as 'bar' | 'line';
+		}
+
 		if ($project.data.length > 0) {
 			let done = false;
 			let count = 0;
@@ -109,6 +113,9 @@
 			ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium
 			placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2
 			focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 mb-3"
+			on:change={() => {
+				localStorage.setItem('graphType', show);
+			}}
 		>
 			<option value="bar">Dates</option>
 			<option value="line">Values</option>

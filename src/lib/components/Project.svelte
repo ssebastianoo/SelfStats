@@ -8,10 +8,16 @@
 	import Charts from './Charts.svelte';
 	import CSV from '$lib/components/CSV.svelte';
 	import { Switch } from '$lib/components/ui/switch/index.js';
+	import { onMount } from 'svelte';
 
 	const dispatch = createEventDispatcher();
-
 	let showGraphs = false;
+
+	onMount(() => {
+		if (localStorage.getItem('showGraphs')) {
+			showGraphs = localStorage.getItem('showGraphs') === 'true';
+		}
+	});
 </script>
 
 <div>
@@ -38,7 +44,13 @@
 	</div>
 	{#key $project.data}
 		<div class="flex items-center gap-2 mb-4">
-			<Switch bind:checked={showGraphs} class="mr-2" />
+			<Switch
+				bind:checked={showGraphs}
+				class="mr-2"
+				on:click={() => {
+					localStorage.setItem('showGraphs', (!showGraphs).toString());
+				}}
+			/>
 			<p>Show graphs</p>
 		</div>
 		{#if showGraphs}
