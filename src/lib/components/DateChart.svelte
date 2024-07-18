@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ValueCharts from './ValueCharts.svelte';
 	import { Line } from 'svelte-chartjs';
 	import {
 		Chart,
@@ -12,7 +13,6 @@
 		CategoryScale
 	} from 'chart.js';
 	import { onMount } from 'svelte';
-	import { project } from '$lib/store';
 	import type { ChartData, Point } from 'chart.js';
 	import type { DataT } from '$lib/types';
 
@@ -20,44 +20,28 @@
 
 	let chartLineData: ChartData<'line', (number | Point)[]> = {
 		labels: [],
-		datasets: []
+		datasets: [
+			{
+				label: 'Dates',
+				backgroundColor: 'white',
+				borderColor: 'white',
+				borderWidth: 3,
+				data: [],
+				// @ts-ignore
+				lineTension: 0.3
+			}
+		]
 	};
 
 	let loaded = false;
 
-	function randomRGBA() {
-		return `rgba(${Math.floor(100 + Math.random() * 155)}, ${Math.floor(100 + Math.random() * 155)}, ${Math.floor(100 + Math.random() * 155)}, 0.4)`;
-	}
-
 	onMount(() => {
-		const descriptors = $project.descriptors.filter((descriptor) => {
-			return descriptor.type === 'number';
-		});
-
-		chartLineData.datasets = descriptors.map((descriptor, index) => {
-			const color = randomRGBA();
-
-			return {
-				label: descriptor.name,
-				backgroundColor: color,
-				borderColor: color,
-				borderWidth: 3,
-				data: [],
-				lineTension: 0.3,
-				id: descriptor.id
-			};
-		});
-
-		const numberValues = period.find((data) =>
-			data.values.some((value) => value.type === 'number')
-		);
-
-		if (numberValues) {
+		if (period.length > 0) {
 			let done = false;
 			let count = 0;
 
 			while (done === false) {
-				let date = new Date(numberValues.created_at);
+				let date = new Date(period[0].created_at);
 				date.setDate(date.getDate() + count);
 				date.setHours(13);
 				date.setMinutes(0);
@@ -80,21 +64,13 @@
 				});
 
 				if (data.length === 0) {
-					for (const dataset of chartLineData.datasets) {
-						dataset.data.push(0);
-					}
+					chartLineData.datasets[0].data.push(0);
 				} else {
-					for (const dataset of chartLineData.datasets) {
-						let totalValue = 0;
-						for (const d of data) {
-							// @ts-ignore
-							const value = d.values.find((value) => value.descriptor_id === dataset.id);
-							if (value) {
-								totalValue += parseFloat(value.value);
-							}
-						}
-						dataset.data.push(totalValue);
+					let totalValue = 0;
+					for (const _ of data) {
+						totalValue += 1;
 					}
+					chartLineData.datasets[0].data.push(totalValue);
 				}
 
 				if (date.toLocaleDateString() === new Date().toLocaleDateString()) {

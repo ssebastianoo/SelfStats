@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Button from './ui/button/button.svelte';
 	import { project } from '$lib/store';
-	import { onMount } from 'svelte';
 
 	function downloadCSV() {
 		let rows = [$project.descriptors.map((x) => x.name)];
