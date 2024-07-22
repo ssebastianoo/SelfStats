@@ -25,17 +25,27 @@
 
 	let loaded = false;
 
-	function randomRGBA() {
-		return `rgba(${Math.floor(100 + Math.random() * 155)}, ${Math.floor(100 + Math.random() * 155)}, ${Math.floor(100 + Math.random() * 155)}, 0.4)`;
-	}
-
 	onMount(() => {
 		const descriptors = $project.descriptors.filter((descriptor) => {
 			return descriptor.type === 'number';
 		});
 
 		chartLineData.datasets = descriptors.map((descriptor, index) => {
-			const color = randomRGBA();
+			let color: string;
+
+			if (index === 0) {
+				color = 'rgb(121,54,236)';
+			} else {
+				let r = 121 + 50 * index;
+				let g = 54 + 50 * index;
+				let b = 236 + 50 * index;
+
+				if (r > 255) r = 255;
+				if (g > 255) g = 255;
+				if (b > 255) b = 255;
+
+				color = `rgb(${r},${g},${b})`;
+			}
 
 			return {
 				label: descriptor.name,

@@ -67,7 +67,7 @@
 			</div>
 		{/if}
 		{#each $projects as project}
-			<a href={'/project/' + project.id} class="border rounded-md p-2 hover:border-white">
+			<a href={'/project/' + project.id} class="border rounded-md p-2 hover:border-primary">
 				<h2 class="text-lg">{project.name}</h2>
 				{#if project.description}
 					<p class="text-muted-foreground">{project.description}</p>
