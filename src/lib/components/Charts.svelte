@@ -34,7 +34,9 @@
 
 	onMount(() => {
 		if (localStorage.getItem('graphType')) {
-			show = localStorage.getItem('graphType') as 'bar' | 'line';
+			if ($project.descriptors.some((descriptor) => descriptor.type === 'number')) {
+				show = localStorage.getItem('graphType') as 'bar' | 'line';
+			}
 		}
 
 		if (localStorage.getItem('graphPeriod')) {
