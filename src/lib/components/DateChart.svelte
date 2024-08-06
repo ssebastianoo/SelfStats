@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ValueCharts from './ValueCharts.svelte';
 	import { Line } from 'svelte-chartjs';
 	import {
 		Chart,
@@ -16,6 +15,7 @@
 	import type { ChartData, Point } from 'chart.js';
 	import type { DataT } from '$lib/types';
 	import { Button } from '$lib/components/ui/button';
+	import { loading } from '$lib/store';
 
 	export let period: DataT[];
 
@@ -100,6 +100,7 @@
 	});
 
 	function screenshot() {
+		$loading = true;
 		capturing = true;
 
 		setTimeout(() => {
@@ -114,6 +115,7 @@
 				link.remove();
 			}
 			capturing = false;
+			$loading = false;
 		}, 200);
 	}
 </script>

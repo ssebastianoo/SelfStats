@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Toaster } from '$lib/components/ui/sonner';
 	import * as Alert from '$lib/components/ui/alert';
-	import { Home, FileArchive, Menu, LogIn, LogOut, Code, KeyRound } from 'lucide-svelte';
+	import { Home, FileArchive, Menu, LogIn, LogOut, Code, KeyRound, Loader } from 'lucide-svelte';
 	import '@fontsource-variable/inter';
 	import './app.css';
 	import { alert } from '$lib/store';
@@ -10,7 +10,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { getProjects, setProjects, sync, decode } from '$lib/utils';
-	import { projects } from '$lib/store';
+	import { projects, loading } from '$lib/store';
 	import type { ProjectT } from '$lib/types';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import Password from '$lib/components/Password.svelte';
@@ -133,6 +133,14 @@
 		{/if}
 	</Alert.Root>
 </div>
+
+{#if $loading}
+	<div
+		class="fixed w-screen h-[var(--fh)] top-0 left-0 z-50 flex justify-center items-center bg-[rgba(0,0,0,0.6)] backdrop-blur-sm"
+	>
+		<Loader class="animate-spin" />
+	</div>
+{/if}
 
 <main class="p-7 flex justify-center">
 	<div class="max-w-[800px] w-full">

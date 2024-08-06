@@ -10,3 +10,4 @@ export const alert = writable({
 	title: '',
 	description: '' as string | null
 });
+export const loading = writable(false);
