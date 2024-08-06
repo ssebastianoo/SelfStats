@@ -15,6 +15,7 @@
 	import { project } from '$lib/store';
 	import type { ChartData, Point } from 'chart.js';
 	import type { DataT } from '$lib/types';
+	import { Button } from '$lib/components/ui/button';
 
 	export let period: DataT[];
 
@@ -24,6 +25,7 @@
 	};
 
 	let loaded = false;
+	let capturing = false;
 
 	onMount(() => {
 		const descriptors = $project.descriptors.filter((descriptor) => {
@@ -130,10 +132,40 @@
 		);
 		loaded = true;
 	});
+
+	function screenshot() {
+		capturing = true;
+
+		setTimeout(() => {
+			const canvas = document.getElementById('captureElement')?.querySelector('canvas');
+			const img = canvas?.toDataURL('image/png');
+
+			if (img) {
+				const link = document.createElement('a');
+				link.download = 'chart.png';
+				link.href = img;
+				link.click();
+				link.remove();
+			}
+			capturing = false;
+		}, 200);
+	}
 </script>
 
 {#if loaded}
+	<Button on:click={screenshot} variant="outline" class="h-[38px] mb-3">Save</Button>
 	<div>
 		<Line data={chartLineData} options={{ maintainAspectRatio: false }} height={250} />
 	</div>
+
+	{#if capturing}
+		<div class="absolute pointer-events-none" id="captureElement">
+			<Line
+				data={chartLineData}
+				options={{ maintainAspectRatio: false }}
+				width={1920}
+				height={1080}
+			/>
+		</div>
+	{/if}
 {/if}
