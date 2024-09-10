@@ -4,6 +4,7 @@ export type ProjectT = {
 	description: string | null;
 	descriptors: DescriptorT[];
 	data: DataT[];
+	showEmptyDays: boolean;
 };
 
 export type DataT = {

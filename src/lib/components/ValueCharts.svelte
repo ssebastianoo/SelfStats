@@ -75,8 +75,6 @@
 				date.setMinutes(0);
 				date.setSeconds(0);
 
-				chartLineData.labels!.push(date.toLocaleDateString());
-
 				const data = period.filter((d) => {
 					const then = new Date(d.created_at);
 
@@ -92,10 +90,14 @@
 				});
 
 				if (data.length === 0) {
-					for (const dataset of chartLineData.datasets) {
-						dataset.data.push(0);
+					if ($project.showEmptyDays) {
+						chartLineData.labels!.push(date.toLocaleDateString());
+						for (const dataset of chartLineData.datasets) {
+							dataset.data.push(0);
+						}
 					}
 				} else {
+					chartLineData.labels!.push(date.toLocaleDateString());
 					for (const dataset of chartLineData.datasets) {
 						let totalValue = 0;
 						for (const d of data) {

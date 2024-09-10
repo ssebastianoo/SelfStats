@@ -21,7 +21,8 @@
 			name,
 			description,
 			data: [],
-			descriptors: []
+			descriptors: [],
+			showEmptyDays: false
 		};
 
 		$projects = [newProject, ...$projects];

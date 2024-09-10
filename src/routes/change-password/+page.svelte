@@ -16,8 +16,6 @@
 	async function changePassword(e: Event) {
 		const target = e.target as HTMLFormElement;
 
-		console.log(target);
-
 		const oldPassword = target.oldPassword.value;
 
 		const res = await fetch('/api/sync');

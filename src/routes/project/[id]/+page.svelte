@@ -10,6 +10,7 @@
 	import { alert } from '$lib/store';
 	import { onMount } from 'svelte';
 	import { setProjects, updateProject } from '$lib/utils';
+	import { Switch } from '$lib/components/ui/switch/index.js';
 
 	export let data;
 
@@ -59,8 +60,6 @@
 			show: true,
 			danger: false
 		};
-
-		target.reset();
 	}
 
 	async function editDescriptors(e: Event) {
@@ -186,6 +185,10 @@
 					placeholder="My really cool statistics project."
 					value={$project.description}
 				/>
+			</div>
+			<div class="flex items-center gap-2 mb-4">
+				<Switch bind:checked={$project.showEmptyDays} class="mr-2" name="showEmptyDays" />
+				<p>Show empty days in value graph</p>
 			</div>
 			<div class="flex justify-end">
 				<Button type="submit" size="sm" variant="default" class="w-20">Save</Button>
