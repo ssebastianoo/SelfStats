@@ -1,6 +1,5 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog';
-	import { Dialog as DialogPrimitive } from 'bits-ui';
 	import { buttonVariants, Button } from '$lib/components/ui/button';
 	import { Plus } from 'lucide-svelte';
 	import Input from './ui/input/input.svelte';
@@ -71,21 +70,23 @@
 				<Dialog.Title>Register new data</Dialog.Title>
 			</Dialog.Header>
 			<form class="flex flex-col gap-3" on:submit|preventDefault={addValue}>
-				{#each $project.descriptors as descriptor}
-					<p>{descriptor.name}</p>
-					{#if descriptor.description}
-						<p>{descriptor.description}</p>
-					{/if}
-					<Input
-						name={'descriptor_' + descriptor.id}
-						type={descriptor.type}
-						placeholder={descriptor.type === 'text' ? 'Enter text' : 'Enter number'}
-						step={descriptor.type === 'number' ? '0.0000001' : undefined}
-						required
-					/>
-				{/each}
+				<div class="flex flex-col gap-3 max-h-[60vh] overflow-auto p-[2px]">
+					{#each $project.descriptors as descriptor}
+						<p>{descriptor.name}</p>
+						{#if descriptor.description}
+							<p>{descriptor.description}</p>
+						{/if}
+						<Input
+							name={'descriptor_' + descriptor.id}
+							type={descriptor.type}
+							placeholder={descriptor.type === 'text' ? 'Enter text' : 'Enter number'}
+							step={descriptor.type === 'number' ? '0.0000001' : undefined}
+							required
+						/>
+					{/each}
+				</div>
 				<div class="flex justify-center">
-					<Button variant="outline" size="sm" type="submit">Add value</Button>
+					<Button class="w-full" variant="outline" size="sm" type="submit">Add value</Button>
 				</div>
 			</form>
 		</Dialog.Content>

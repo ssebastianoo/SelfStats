@@ -140,26 +140,28 @@
 				</div>
 				<input type="hidden" value={day + ' ' + hours + ':' + minutes} name="original_date" />
 			</div>
-			{#each data.values as value}
-				{#if descriptors.find((descriptor) => value.descriptor_id === descriptor.id)}
-					<div class="flex gap-2">
-						<Label class="w-24" for={'value_' + value.id}
-							>{descriptors.find((descriptor) => value.descriptor_id === descriptor.id)
-								?.name}</Label
-						>
-						<Input
-							id={'value_' + value.id}
-							type={descriptors.find((descriptor) => value.descriptor_id === descriptor.id)?.type}
-							name={'value_' + value.id}
-							value={value.value}
-							step={descriptors.find((descriptor) => value.descriptor_id === descriptor.id)
-								?.type === 'number'
-								? '0.0000001'
-								: undefined}
-						/>
-					</div>
-				{/if}
-			{/each}
+			<div class="flex flex-col gap-2 max-h-[60vh] overflow-auto py-[2px] pr-[2px]">
+				{#each data.values as value}
+					{#if descriptors.find((descriptor) => value.descriptor_id === descriptor.id)}
+						<div class="flex gap-2">
+							<Label class="w-24" for={'value_' + value.id}
+								>{descriptors.find((descriptor) => value.descriptor_id === descriptor.id)
+									?.name}</Label
+							>
+							<Input
+								id={'value_' + value.id}
+								type={descriptors.find((descriptor) => value.descriptor_id === descriptor.id)?.type}
+								name={'value_' + value.id}
+								value={value.value}
+								step={descriptors.find((descriptor) => value.descriptor_id === descriptor.id)
+									?.type === 'number'
+									? '0.0000001'
+									: undefined}
+							/>
+						</div>
+					{/if}
+				{/each}
+			</div>
 			<div class="text-right">
 				<Button variant="destructive" size="sm" class="mr-1" on:click={deleteData}>Delete</Button>
 				<Button type="submit" size="sm">Save</Button>
