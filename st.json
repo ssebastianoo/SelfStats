@@ -1,0 +1,1539 @@
+[
+    {
+        "id": 1735757786395,
+        "name": "poop",
+        "description": "",
+        "data": [
+            {
+                "id": 1737626000009,
+                "created_at": "2025-01-23T09:53:20.009Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1735757819651,
+                "created_at": "2025-01-01T14:00:00.000Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1735757828674,
+                "created_at": "2025-01-01T18:57:08.674Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1735996344763,
+                "created_at": "2025-01-03T13:12:00.000Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1735996359740,
+                "created_at": "2025-01-04T11:00:00.000Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1735996686746,
+                "created_at": "2025-01-04T13:18:06.747Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736146549301,
+                "created_at": "2025-01-05T14:00:00.000Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736146558989,
+                "created_at": "2025-01-06T06:55:58.989Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736190094932,
+                "created_at": "2025-01-06T19:01:34.932Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736242031381,
+                "created_at": "2025-01-07T08:27:00.000Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736262274630,
+                "created_at": "2025-01-07T15:04:34.630Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736341925759,
+                "created_at": "2025-01-08T13:12:05.759Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736408760522,
+                "created_at": "2025-01-09T06:46:00.000Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736427230858,
+                "created_at": "2025-01-09T12:53:50.858Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736443694585,
+                "created_at": "2025-01-09T17:28:14.585Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736504017671,
+                "created_at": "2025-01-10T10:13:37.671Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736604075638,
+                "created_at": "2025-01-11T14:01:15.638Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736687881792,
+                "created_at": "2025-01-12T13:18:01.792Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736776170685,
+                "created_at": "2025-01-13T13:49:30.685Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736796990486,
+                "created_at": "2025-01-13T19:36:30.486Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736861017189,
+                "created_at": "2025-01-14T13:23:37.189Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736927977460,
+                "created_at": "2025-01-15T07:59:37.460Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1736968495548,
+                "created_at": "2025-01-15T19:14:55.549Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1737097450108,
+                "created_at": "2025-01-17T07:04:10.108Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1737216567144,
+                "created_at": "2025-01-18T16:09:27.144Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1737294434515,
+                "created_at": "2025-01-19T13:47:14.515Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1737464115583,
+                "created_at": "2025-01-21T12:55:15.583Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1737554007401,
+                "created_at": "2025-01-22T13:53:27.401Z",
+                "values": [],
+                "project_id": 1735757786395
+            },
+            {
+                "id": 1737579262132,
+                "created_at": "2025-01-22T20:54:22.132Z",
+                "values": [],
+                "project_id": 1735757786395
+            }
+        ],
+        "descriptors": [],
+        "showEmptyDays": false
+    },
+    {
+        "id": 1721664883855,
+        "name": "Headache",
+        "description": null,
+        "data": [
+            {
+                "id": 1721699282001,
+                "created_at": "2024-07-23T01:48:02.001Z",
+                "values": [
+                    {
+                        "descriptor_id": 1721664895152,
+                        "name": "Intensity",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1721664883855,
+                        "value": "8",
+                        "id": 820018368430
+                    },
+                    {
+                        "descriptor_id": 1721699270492,
+                        "name": "Desc",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1721664883855,
+                        "value": "aereo",
+                        "id": 820015506764
+                    }
+                ],
+                "project_id": 1721664883855
+            },
+            {
+                "id": 1722020778360,
+                "created_at": "2024-07-26T19:06:18.360Z",
+                "values": [
+                    {
+                        "descriptor_id": 1721664895152,
+                        "name": "Intensity",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1721664883855,
+                        "value": "4",
+                        "id": 783607904753
+                    },
+                    {
+                        "descriptor_id": 1721699270492,
+                        "name": "Desc",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1721664883855,
+                        "value": "breve, principalmente male al collo",
+                        "id": 783606189270
+                    }
+                ],
+                "project_id": 1721664883855
+            },
+            {
+                "id": 1722797507288,
+                "created_at": "2024-08-04T17:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1721664895152,
+                        "name": "Intensity",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1721664883855,
+                        "value": "7",
+                        "id": 72882202502
+                    },
+                    {
+                        "descriptor_id": 1721699270492,
+                        "name": "Desc",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1721664883855,
+                        "value": "facendo addominali",
+                        "id": 72885414346
+                    }
+                ],
+                "project_id": 1721664883855
+            },
+            {
+                "id": 1722987412079,
+                "created_at": "2024-08-06T23:36:52.079Z",
+                "values": [
+                    {
+                        "descriptor_id": 1721664895152,
+                        "name": "Intensity",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1721664883855,
+                        "value": "9",
+                        "id": 120792267898
+                    },
+                    {
+                        "descriptor_id": 1721699270492,
+                        "name": "Desc",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1721664883855,
+                        "value": "ho fatto il ponte",
+                        "id": 120798249115
+                    }
+                ],
+                "project_id": 1721664883855
+            },
+            {
+                "id": 1725815765414,
+                "created_at": "2024-09-08T17:16:05.414Z",
+                "values": [
+                    {
+                        "descriptor_id": 1721664895152,
+                        "name": "Intensity",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1721664883855,
+                        "value": "3",
+                        "id": 654142179074
+                    },
+                    {
+                        "descriptor_id": 1721699270492,
+                        "name": "Desc",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1721664883855,
+                        "value": "lieve",
+                        "id": 654144733054
+                    }
+                ],
+                "project_id": 1721664883855
+            },
+            {
+                "id": 1725955375978,
+                "created_at": "2024-09-10T08:02:55.978Z",
+                "values": [
+                    {
+                        "descriptor_id": 1721664895152,
+                        "name": "Intensity",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1721664883855,
+                        "value": "1",
+                        "id": 759789126511
+                    },
+                    {
+                        "descriptor_id": 1721699270492,
+                        "name": "Desc",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1721664883855,
+                        "value": "fastidio quando mi sono seduto",
+                        "id": 759787078116
+                    }
+                ],
+                "project_id": 1721664883855
+            },
+            {
+                "id": 1727303271886,
+                "created_at": "2024-09-25T22:27:51.886Z",
+                "values": [
+                    {
+                        "descriptor_id": 1721664895152,
+                        "name": "Intensity",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1721664883855,
+                        "value": "9",
+                        "id": 718862051655
+                    },
+                    {
+                        "descriptor_id": 1721699270492,
+                        "name": "Desc",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1721664883855,
+                        "value": "forte e lungo almeno 2 minuti di fila dopo averlo avuto poco per tutto il giorno, mi ero appena alzato dalla sedia",
+                        "id": 718869182216
+                    }
+                ],
+                "project_id": 1721664883855
+            },
+            {
+                "id": 1731722024450,
+                "created_at": "2024-11-16T01:53:44.450Z",
+                "values": [
+                    {
+                        "descriptor_id": 1721664895152,
+                        "name": "Intensity",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1721664883855,
+                        "value": "7",
+                        "id": 244508747128
+                    },
+                    {
+                        "descriptor_id": 1721699270492,
+                        "name": "Desc",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1721664883855,
+                        "value": "a caso mentre ero seduto alla scrivania usando il computer",
+                        "id": 244506538199
+                    }
+                ],
+                "project_id": 1721664883855
+            }
+        ],
+        "descriptors": [
+            {
+                "id": 1721664895152,
+                "name": "Intensity",
+                "description": "",
+                "type": "number",
+                "project_id": 1721664883855
+            },
+            {
+                "id": 1721699270492,
+                "name": "Desc",
+                "description": "",
+                "type": "text",
+                "project_id": 1721664883855
+            }
+        ],
+        "showEmptyDays": true
+    },
+    {
+        "id": 1721617436355,
+        "name": "Bites",
+        "description": null,
+        "data": [
+            {
+                "id": 1721749409389,
+                "created_at": "2024-07-23T15:43:29.389Z",
+                "values": [],
+                "project_id": 1721617436355
+            },
+            {
+                "id": 1721866745842,
+                "created_at": "2024-07-25T00:19:05.842Z",
+                "values": [],
+                "project_id": 1721617436355
+            },
+            {
+                "id": 1721939213886,
+                "created_at": "2024-07-25T20:26:53.886Z",
+                "values": [],
+                "project_id": 1721617436355
+            },
+            {
+                "id": 1724188279087,
+                "created_at": "2024-08-20T21:11:19.087Z",
+                "values": [],
+                "project_id": 1721617436355
+            }
+        ],
+        "descriptors": []
+    },
+    {
+        "id": 1717243086189,
+        "name": "Soldi",
+        "description": "",
+        "data": [
+            {
+                "id": 1717243128867,
+                "created_at": "2024-05-31T23:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "20",
+                        "id": 288673955583
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Benzina",
+                        "id": 288673969701
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1717249125225,
+                "created_at": "2024-06-01T01:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "5",
+                        "id": 252251660464
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "preservativi",
+                        "id": 252252940758
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1717365157252,
+                "created_at": "2024-06-02T21:52:37.252Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "2.5",
+                        "id": 572522676595
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Rockstar",
+                        "id": 572526292981
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1717608066695,
+                "created_at": "2024-06-05T12:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "3.5",
+                        "id": 666954630546
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "pizza + pepsi",
+                        "id": 666952639891
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1717799065738,
+                "created_at": "2024-06-07T09:20:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "3.5",
+                        "id": 657388034565
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "McFlurry",
+                        "id": 657385715636
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1717761793995,
+                "created_at": "2024-06-07T12:03:13.995Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "12",
+                        "id": 939951772669
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "pizza",
+                        "id": 939952026574
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1718239654768,
+                "created_at": "2024-06-11T14:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "40",
+                        "id": 547685605082
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Benzina",
+                        "id": 547688051206
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1718095473396,
+                "created_at": "2024-06-11T20:44:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "10",
+                        "id": 733963525562
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Cinema (biglietto + cibo)",
+                        "id": 733969115979
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1718239620193,
+                "created_at": "2024-06-12T21:45:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "2.5",
+                        "id": 201933114021
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Monster",
+                        "id": 201934447833
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1718300826253,
+                "created_at": "2024-06-13T17:47:06.253Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "8.10",
+                        "id": 262532228130
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "toast + acqua",
+                        "id": 262537796327
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1718616972137,
+                "created_at": "2024-06-15T08:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "40",
+                        "id": 721371536418
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "benzina",
+                        "id": 721373050517
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1718616985683,
+                "created_at": "2024-06-15T09:36:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "10.50",
+                        "id": 856835125081
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Panino + acqua",
+                        "id": 856837961658
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1718718844974,
+                "created_at": "2024-06-17T21:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "38.5",
+                        "id": 449742785462
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "sushi (anche per nicola...)",
+                        "id": 449749794915
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1719157762390,
+                "created_at": "2024-06-20T08:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "10",
+                        "id": 623908114323
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "panino + coca cola",
+                        "id": 623907135640
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1719157747120,
+                "created_at": "2024-06-22T09:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "30",
+                        "id": 471204660074
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Benzina",
+                        "id": 471207471090
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1719567135949,
+                "created_at": "2024-06-26T20:30:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "7",
+                        "id": 359493356921
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Rivolta",
+                        "id": 359493553423
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1719574912943,
+                "created_at": "2024-06-27T16:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "0.84",
+                        "id": 129431156502
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Monster",
+                        "id": 129433357802
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1719671244014,
+                "created_at": "2024-06-29T14:27:24.014Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "19.80",
+                        "id": 440148116899
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "portfolio",
+                        "id": 440143858416
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1719750362687,
+                "created_at": "2024-06-29T21:30:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "50",
+                        "id": 626874329883
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "benzina",
+                        "id": 626878941775
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1720053252591,
+                "created_at": "2024-07-01T21:34:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "2",
+                        "id": 525914608050
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Guaranà",
+                        "id": 525913002503
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1720444021387,
+                "created_at": "2024-07-06T13:07:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "30",
+                        "id": 213878568943
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Benzina",
+                        "id": 213871419474
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1720444033429,
+                "created_at": "2024-07-07T13:07:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "23",
+                        "id": 334293934454
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Sushi",
+                        "id": 334292295616
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1720713967014,
+                "created_at": "2024-07-10T20:30:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "5",
+                        "id": 670142934630
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "burger king",
+                        "id": 670149705166
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1720731975290,
+                "created_at": "2024-07-11T21:06:15.290Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "4",
+                        "id": 752904331356
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "lemon soda",
+                        "id": 752901881555
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1720731981788,
+                "created_at": "2024-07-11T21:06:21.788Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "2.5",
+                        "id": 817887580680
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "gelato",
+                        "id": 817884418004
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1720740953809,
+                "created_at": "2024-07-12T10:45:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "5",
+                        "id": 538098213405
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "pizza + acqua",
+                        "id": 538095173135
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1721835893432,
+                "created_at": "2024-07-24T15:44:53.432Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "45",
+                        "id": 934325906944
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "fit palestra",
+                        "id": 934323985282
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1721835898345,
+                "created_at": "2024-07-24T15:44:58.345Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "15",
+                        "id": 983454782913
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "pants",
+                        "id": 983454319862
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1722122793743,
+                "created_at": "2024-07-26T13:30:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "13",
+                        "id": 937437204410
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "pranzo pizza",
+                        "id": 937438262509
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1722639094369,
+                "created_at": "2024-08-01T15:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "9",
+                        "id": 943691180390
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "tappetino palestra",
+                        "id": 943696523059
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1722611282412,
+                "created_at": "2024-08-01T21:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "5",
+                        "id": 824127085093
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "sala prove",
+                        "id": 824121812937
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723126726139,
+                "created_at": "2024-08-03T02:18:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "50",
+                        "id": 261398783426
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "benzina",
+                        "id": 261391031472
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1722774025376,
+                "created_at": "2024-08-03T21:30:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "7",
+                        "id": 253762992128
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "pinacolada",
+                        "id": 253768983372
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723126708486,
+                "created_at": "2024-08-08T14:18:28.486Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "15",
+                        "id": 84863136925
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "osteria senz'oste ",
+                        "id": 84868020347
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723168568817,
+                "created_at": "2024-08-08T21:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "3",
+                        "id": 688177124569
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "acqua ",
+                        "id": 688171940878
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723168582910,
+                "created_at": "2024-08-08T23:00:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "1.4",
+                        "id": 829107680970
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "krapfen ",
+                        "id": 829102931322
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723407756964,
+                "created_at": "2024-08-10T08:22:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "5",
+                        "id": 569643602147
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "pizza",
+                        "id": 569649150783
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723407761902,
+                "created_at": "2024-08-11T20:22:41.902Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "2.5",
+                        "id": 619023249674
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "gelato",
+                        "id": 619024568271
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723813464421,
+                "created_at": "2024-08-13T06:40:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "50",
+                        "id": 644217733598
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "Benzina",
+                        "id": 644214915561
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723813490163,
+                "created_at": "2024-08-13T13:04:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "5",
+                        "id": 901635100699
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "panino",
+                        "id": 901637449409
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723813512504,
+                "created_at": "2024-08-16T13:05:12.504Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "6",
+                        "id": 125049026139
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "cose jesolo",
+                        "id": 125047656293
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723841487686,
+                "created_at": "2024-08-16T20:51:27.686Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "2",
+                        "id": 876851627621
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "biliardo",
+                        "id": 876864299708
+                    }
+                ],
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1723841499234,
+                "created_at": "2024-08-16T07:30:00.000Z",
+                "values": [
+                    {
+                        "descriptor_id": 1717243104456,
+                        "name": "Quantità",
+                        "description": "",
+                        "type": "number",
+                        "project_id": 1717243086189,
+                        "value": "4",
+                        "id": 992346416079
+                    },
+                    {
+                        "descriptor_id": 1717243116770,
+                        "name": "Fine",
+                        "description": "",
+                        "type": "text",
+                        "project_id": 1717243086189,
+                        "value": "colazione McDonald's ",
+                        "id": 992347611220
+                    }
+                ],
+                "project_id": 1717243086189
+            }
+        ],
+        "descriptors": [
+            {
+                "id": 1717243104456,
+                "name": "Quantità",
+                "description": "",
+                "type": "number",
+                "project_id": 1717243086189
+            },
+            {
+                "id": 1717243116770,
+                "name": "Fine",
+                "description": "",
+                "type": "text",
+                "project_id": 1717243086189
+            }
+        ]
+    }
+]

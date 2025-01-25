@@ -46,17 +46,35 @@
 
 			const reader = new FileReader();
 			reader.onload = (e) => {
-				const projects = JSON.parse(e.target!.result as string);
-				setProjects(projects, true);
-				$alert = {
-					show: true,
-					danger: false,
-					title: 'Backup loaded',
-					description: 'Projects have been loaded successfully'
-				};
+				try {
+					const buffer = e.target!.result as ArrayBuffer;
+					const decoder = new TextDecoder('utf-8');
+					const textContent = decoder.decode(buffer);
+					console.log(textContent);
+
+					const projects = JSON.parse(textContent);
+
+					setProjects(projects, true);
+					$alert = {
+						show: true,
+						danger: false,
+						title: 'Backup loaded',
+						description: 'Projects have been loaded successfully'
+					};
+				} catch (error) {
+					console.error('Error reading or parsing the file:', error);
+					$alert = {
+						show: true,
+						danger: true,
+						title: 'Error loading file',
+						description: 'The file could not be loaded. Please ensure it is valid JSON.'
+					};
+				}
 			};
-			reader.readAsText(file);
+
+			reader.readAsArrayBuffer(file);
 		};
+
 		input.click();
 		input.remove();
 	}
