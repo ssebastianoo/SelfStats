@@ -2,13 +2,14 @@
 	import Register from '$lib/components/Register.svelte';
 	import Values from '$lib/components/Values.svelte';
 	import { Button } from './ui/button';
-	import { Pencil } from 'lucide-svelte';
+	import { Pencil, Minus } from 'lucide-svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { project } from '$lib/store';
 	import Charts from './Charts.svelte';
 	import CSV from '$lib/components/CSV.svelte';
 	import { Switch } from '$lib/components/ui/switch/index.js';
 	import { onMount } from 'svelte';
+	import { updateProject } from '$lib/utils';
 
 	const dispatch = createEventDispatcher();
 	let showGraphs = false;
@@ -39,6 +40,16 @@
 	<hr class="my-4" />
 
 	<div class="flex justify-center gap-4 items-center mb-4">
+		<Button
+			variant="outline"
+			size="sm"
+			on:click={() => {
+				// remove the first data
+				$project.data.shift();
+				$project.data = $project.data;
+				updateProject($project);
+			}}><Minus /></Button
+		>
 		<h1 class="text-6xl">{$project.data.length}</h1>
 		<Register />
 	</div>
